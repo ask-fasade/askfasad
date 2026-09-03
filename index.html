@@ -6,7 +6,7 @@
 <title>АСК-Фасад · Термопанели</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-:root{--bg:#f4eee2;--card:#fffcf6;--ink:#282019;--muted:#93876f;--line:#e6dcc8;--accent:#b0522c;--accent-dark:#8e3f20;--accent-soft:#f6e5d7;--dark:#241b13;--ok:#4e7d5b;--warn:#b3842d}
+:root{--bg:#f4eee2;--card:#fffcf6;--ink:#282019;--muted:#93876f;--line:#e6dcc8;--accent:#b0522c;--accent-dark:#8e3f20;--accent-soft:#f6e5d7;--dark:#241b13;--ok:#4e7d5b;--warn:#b3842d;--wa:#2fae4d}
 html,body{height:100%}
 body{background:#171210;font-family:system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;color:var(--ink);display:flex;justify-content:center}
 #app{position:relative;width:100%;max-width:420px;min-height:100vh;background:var(--bg);display:flex;flex-direction:column}
@@ -29,9 +29,10 @@ main{flex:1;overflow-y:auto;scrollbar-width:none;display:flex;flex-direction:col
 main::-webkit-scrollbar{display:none}
 .se{animation:se .3s ease}
 @keyframes se{from{opacity:0;transform:translateY(8px)}to{opacity:1}}
-.btn{width:100%;height:52px;border:none;border-radius:14px;font:inherit;font-weight:700;font-size:15.5px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:16px}
+.btn{width:100%;height:52px;border:none;border-radius:14px;font:inherit;font-weight:700;font-size:15.5px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:16px;text-decoration:none}
 .btn:active{transform:translateY(1px)}
 .bp{background:var(--accent);color:#fff}
+.bwa{background:var(--wa);color:#fff}
 .bg2{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
 .bd{background:var(--dark);color:#f4eee3}
 .lnk{border:none;background:none;color:var(--accent);font:inherit;font-size:13px;font-weight:700;cursor:pointer;padding:2px 4px}
@@ -43,13 +44,14 @@ main::-webkit-scrollbar{display:none}
 .tgrid>*,.g3>*,.g2>*{min-width:0}
 .tcard{border:1.5px solid var(--line);background:var(--card);border-radius:18px;padding:9px;cursor:pointer;font:inherit;text-align:left;overflow:hidden}
 .tcard:active{transform:scale(.98)}
+.tcard-center{display:block;width:calc(50% - 6px);margin:12px auto 0}
 .timg{border-radius:12px;overflow:hidden;aspect-ratio:1;border:1px solid var(--line)}
 .timg svg,.timg img{width:100%;height:100%;display:block;object-fit:cover}
 .tname{display:flex;align-items:center;justify-content:space-between;gap:6px;font-weight:800;font-size:13px;margin:9px 2px 2px}
 .tname .ic{width:17px;height:17px;color:var(--muted)}
 .tprice{font-size:12px;color:var(--accent);font-weight:700;margin:0 2px}
 .note{display:flex;gap:10px;align-items:center;background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:11px 13px;margin-top:16px;font-size:12.5px;color:var(--muted);line-height:1.45}
-.note .ic{color:var(--accent)}
+.note .ic{color:var(--accent);flex:none}
 .g3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
 .sq{position:relative;border:1.5px solid var(--line);background:var(--card);border-radius:15px;padding:7px;cursor:pointer;font:inherit;text-align:left}
@@ -64,9 +66,12 @@ main::-webkit-scrollbar{display:none}
 .ck .ic{width:14px;height:14px}
 .sel .ck{display:flex}
 .swn{font-size:11.5px;font-weight:700;margin:6px 1px 1px;line-height:1.25}
+.sprice{font-size:11px;font-weight:800;color:var(--accent);margin:1px 1px 2px;line-height:1.2}
 .jprev{border-radius:16px;overflow:hidden;aspect-ratio:16/9;border:1px solid var(--line);margin-top:14px}
 .jprev svg,.jprev img{width:100%;height:100%;display:block;object-fit:cover}
 .jcap{font-size:12.5px;color:var(--muted);margin:8px 2px 0}
+.ditem{border-radius:16px;overflow:hidden;aspect-ratio:1;max-width:300px;margin:14px auto 4px;border:1px solid var(--line)}
+.ditem svg,.ditem img{width:100%;height:100%;object-fit:cover;display:block}
 .th{border:1.5px solid var(--line);background:var(--card);border-radius:15px;padding:13px;cursor:pointer;font:inherit;text-align:left;position:relative}
 .th b{font-size:16px;display:block}
 .th span{color:var(--accent);font-weight:700;font-size:13.5px}
@@ -87,6 +92,9 @@ main::-webkit-scrollbar{display:none}
 .hint .ic{width:15px;height:15px;margin-top:1px;flex:none}
 .sumline{display:flex;justify-content:space-between;align-items:baseline;gap:10px;border-top:1px dashed var(--line);margin-top:11px;padding-top:10px;font-size:12.5px;color:var(--muted)}
 .sumline b{color:var(--ink);font-size:14.5px;white-space:nowrap}
+.dtotal{display:flex;justify-content:space-between;align-items:baseline;margin-top:4px}
+.dtotal span{font-size:13.5px;color:var(--muted);font-weight:700}
+.dtotal b{font-size:21px;white-space:nowrap}
 .lead{display:flex;gap:8px;align-items:flex-start;background:var(--accent-soft);border-radius:13px;padding:11px 13px;font-size:12.5px;color:var(--accent-dark);line-height:1.5;margin-top:14px}
 .lead .ic{width:17px;height:17px}
 .tbar{position:sticky;bottom:0;background:var(--card);border-top:1px solid var(--line);padding:12px 18px 24px;display:flex;align-items:center;gap:14px;box-shadow:0 -8px 24px -12px rgba(46,32,18,.15)}
@@ -299,7 +307,6 @@ var GROUT_CERAM={price:700,unit:'ведро 5 кг'};
 var LEAD_DAYS=10, ADMIN_PIN='2468';
 var TEST_USER={name:'Тестовый Клиент',phone:'+7 (900) 000-00-00'};
 
-/* Цвета кирпича — 29 вариантов, подпись = номер (1…29). Фото: brick-01.jpg … brick-29.jpg */
 var BRICK_COLORS=[
  {n:'1',c:'#9c3826',img:'brick-01.jpg'},
  {n:'2',c:'#bd5c38',img:'brick-02.jpg'},
@@ -330,7 +337,6 @@ var BRICK_COLORS=[
  {n:'27',c:'#7a3b3f',img:'brick-27.jpg'},
  {n:'28',c:'#7d7a4e',img:'brick-28.jpg'},
  {n:'29',c:'#5c6b46',img:'brick-29.jpg'}];
-/* Цвета шва — 13 вариантов, названия сохранены. Фото: joint-01.jpg … joint-13.jpg */
 var JOINTS=[
  {n:'Графит',c:'#3e3c3a',img:'joint-01.jpg'},
  {n:'Тёмно-серый',c:'#6d6d6d',img:'joint-02.jpg'},
@@ -346,44 +352,57 @@ var JOINTS=[
  {n:'Медный',c:'#b87333',img:'joint-12.jpg'},
  {n:'Чёрный',c:'#1e1c1a',img:'joint-13.jpg'}];
 var TILES=[
- {n:'Белая',c:'#f0ede6',img:'tile-01.jpg'},
- {n:'Кремовая',c:'#efe3cd',img:'tile-02.jpg'},
- {n:'Бежевая',c:'#e3cfae',img:'tile-03.jpg'},
- {n:'Капучино',c:'#c8a882',img:'tile-04.jpg'},
- {n:'Песочная',c:'#dcc08e',img:'tile-05.jpg'},
- {n:'Терракота',c:'#c26b4a',img:'tile-06.jpg'},
- {n:'Кирпичная',c:'#a8503a',img:'tile-07.jpg'},
- {n:'Коралловая',c:'#d47f6a',img:'tile-08.jpg'},
- {n:'Оливковая',c:'#8a8a4f',img:'tile-09.jpg'},
- {n:'Фисташковая',c:'#a8bd8a',img:'tile-10.jpg'},
- {n:'Салатовая',c:'#b9c978',img:'tile-11.jpg'},
- {n:'Изумрудная',c:'#3f8a68',img:'tile-12.jpg'},
- {n:'Бирюзовая',c:'#5ba8a0',img:'tile-13.jpg'},
- {n:'Морская',c:'#33697a',img:'tile-14.jpg'},
- {n:'Голубая',c:'#9ec3d4',img:'tile-15.jpg'},
- {n:'Небесная',c:'#b7d3e0',img:'tile-16.jpg'},
- {n:'Синяя',c:'#4a6f9e',img:'tile-17.jpg'},
- {n:'Тёмно-синяя',c:'#2f4562',img:'tile-18.jpg'},
- {n:'Сиреневая',c:'#a996bf',img:'tile-19.jpg'},
- {n:'Лавандовая',c:'#c3b4d6',img:'tile-20.jpg'},
- {n:'Розовая',c:'#d9a3a3',img:'tile-21.jpg'},
- {n:'Пудровая',c:'#e3c3bb',img:'tile-22.jpg'},
- {n:'Бордовая',c:'#7a3b45',img:'tile-23.jpg'},
- {n:'Графитовая',c:'#55565a',img:'tile-24.jpg'},
- {n:'Серая',c:'#9a9a98',img:'tile-25.jpg'},
- {n:'Св.серая',c:'#c9c9c6',img:'tile-26.jpg'},
- {n:'Антрацит',c:'#3b3c40',img:'tile-27.jpg'},
- {n:'Коричневая',c:'#8a6248',img:'tile-28.jpg'},
- {n:'Шоколадная',c:'#5c4232',img:'tile-29.jpg'},
- {n:'Чёрная',c:'#33302e',img:'tile-30.jpg'}];
+ {n:'1',c:'#f0ede6',img:'tile-01.jpg'},
+ {n:'2',c:'#efe3cd',img:'tile-02.jpg'},
+ {n:'3',c:'#e3cfae',img:'tile-03.jpg'},
+ {n:'4',c:'#c8a882',img:'tile-04.jpg'},
+ {n:'5',c:'#dcc08e',img:'tile-05.jpg'},
+ {n:'6',c:'#c26b4a',img:'tile-06.jpg'},
+ {n:'7',c:'#a8503a',img:'tile-07.jpg'},
+ {n:'8',c:'#d47f6a',img:'tile-08.jpg'},
+ {n:'9',c:'#8a8a4f',img:'tile-09.jpg'},
+ {n:'10',c:'#a8bd8a',img:'tile-10.jpg'},
+ {n:'11',c:'#b9c978',img:'tile-11.jpg'},
+ {n:'12',c:'#3f8a68',img:'tile-12.jpg'},
+ {n:'13',c:'#5ba8a0',img:'tile-13.jpg'},
+ {n:'14',c:'#33697a',img:'tile-14.jpg'},
+ {n:'15',c:'#9ec3d4',img:'tile-15.jpg'},
+ {n:'16',c:'#b7d3e0',img:'tile-16.jpg'},
+ {n:'17',c:'#4a6f9e',img:'tile-17.jpg'},
+ {n:'18',c:'#2f4562',img:'tile-18.jpg'},
+ {n:'19',c:'#a996bf',img:'tile-19.jpg'},
+ {n:'20',c:'#c3b4d6',img:'tile-20.jpg'},
+ {n:'21',c:'#d9a3a3',img:'tile-21.jpg'},
+ {n:'22',c:'#e3c3bb',img:'tile-22.jpg'},
+ {n:'23',c:'#7a3b45',img:'tile-23.jpg'},
+ {n:'24',c:'#55565a',img:'tile-24.jpg'},
+ {n:'25',c:'#9a9a98',img:'tile-25.jpg'},
+ {n:'26',c:'#c9c9c6',img:'tile-26.jpg'},
+ {n:'27',c:'#3b3c40',img:'tile-27.jpg'},
+ {n:'28',c:'#8a6248',img:'tile-28.jpg'},
+ {n:'29',c:'#5c4232',img:'tile-29.jpg'},
+ {n:'30',c:'#33302e',img:'tile-30.jpg'}];
 
-/* ===== Фото с запасным рисунком: если файла нет — показывается SVG-превью ===== */
+/* Фасадный декор.
+   price  — цена по умолчанию для всех элементов категории (₽ за шт)
+   prices — индивидуальные цены по номерам, например prices:{5:400,12:450}
+   Углы (index 3) — без пометки про 2 метра */
+var DECOR=[
+ {n:'Карнизы',img:'decor-1.jpg',file:'karniz',count:100,twoM:true,price:0,prices:{}},
+ {n:'Молдинги',img:'decor-2.jpg',file:'molding',count:100,twoM:true,price:0,prices:{}},
+ {n:'Подоконники',img:'decor-3.jpg',file:'podokonnik',count:100,twoM:true,price:0,prices:{}},
+ {n:'Углы',img:'decor-4.jpg',file:'ugol',count:15,twoM:false,price:0,prices:{}}];
+function decorPrice(ci,n){
+ var c=DECOR[ci];
+ return (c.prices&&c.prices[n]!=null)?c.prices[n]:c.price;
+}
+
 var swfSeq=0,SW_FALLBACK={};
-function photoOr(file,fallbackHTML,alt){
+function photoOr(file,fallbackHTML,alt,lazy){
  if(!file)return fallbackHTML;
  var id='swf'+(++swfSeq);
  SW_FALLBACK[id]=fallbackHTML;
- return '<img src="'+file+'" alt="'+(alt||'')+'" data-fb="'+id+'" style="opacity:0" onload="this.style.opacity=1" onerror="swImgErr(this)">';
+ return '<img src="'+file+'" alt="'+(alt||'')+'"'+(lazy?' loading="lazy"':'')+' data-fb="'+id+'" style="opacity:0" onload="this.style.opacity=1" onerror="swImgErr(this)">';
 }
 function swImgErr(el){
  var id=el.getAttribute('data-fb'),fb=SW_FALLBACK[id];
@@ -395,6 +414,47 @@ function samplesNote(){
  return '<div class="note" style="margin-top:14px">'+ic('info')+'<span>Экран телефона может искажать оттенок. Точный цвет и фактуру лучше оценить по образцу — закажите образцы у менеджера.</span></div>'
  +'<a class="btn bg2" style="text-decoration:none" href="'+WA_SAMPLES+'" target="_blank" rel="noopener">'+ic('wa')+'Заказать образцы</a>';
 }
+
+function pad2(n){return n<10?('0'+n):(''+n);}
+function decorItemFile(ci,n){return DECOR[ci].file+'-'+pad2(n)+'.jpg';}
+function decorFallback(num){
+ var s='<svg viewBox="0 0 200 200" preserveAspectRatio="xMidYMid slice">';
+ s+='<rect width="200" height="200" fill="#ece5d6"/>';
+ s+='<rect x="28" y="76" width="144" height="11" rx="4" fill="#d9cfba"/>';
+ s+='<rect x="40" y="87" width="120" height="11" rx="4" fill="#cfc3aa"/>';
+ s+='<rect x="28" y="98" width="144" height="11" rx="4" fill="#d9cfba"/>';
+ s+='<text x="100" y="156" text-anchor="middle" font-family="Arial" font-size="34" font-weight="800" fill="#a89a7f">'+num+'</text>';
+ s+='</svg>';
+ return s;
+}
+function decorCatFallback(i){
+ var s='<svg viewBox="0 0 200 200" preserveAspectRatio="xMidYMid slice">';
+ s+='<rect width="200" height="200" fill="#ece5d6"/><g fill="#d9cfba">';
+ if(i===0){
+  s+='<rect x="20" y="70" width="160" height="14" rx="4"/><rect x="34" y="84" width="132" height="14" rx="4"/><rect x="20" y="98" width="160" height="14" rx="4"/>';
+ }else if(i===1){
+  s+='<rect x="24" y="62" width="152" height="12" rx="4"/><rect x="24" y="94" width="152" height="12" rx="4"/><rect x="24" y="126" width="152" height="12" rx="4"/>';
+ }else if(i===2){
+  s+='<rect x="16" y="92" width="168" height="18" rx="5"/><rect x="30" y="110" width="140" height="10" rx="4" fill="#cfc3aa"/>';
+ }else{
+  s+='<path d="M60 40h26v94h54v26H60z"/>';
+ }
+ s+='</g></svg>';
+ return s;
+}
+function decorCoverSVG(){
+ var s='<svg viewBox="0 0 200 200" preserveAspectRatio="xMidYMid slice">';
+ s+='<rect width="200" height="200" fill="#ece5d6"/><g fill="#d9cfba">';
+ s+='<rect x="18" y="46" width="164" height="14" rx="4"/>';
+ s+='<rect x="30" y="60" width="140" height="10" rx="4" fill="#cfc3aa"/>';
+ s+='<rect x="18" y="70" width="164" height="12" rx="4"/>';
+ s+='<rect x="18" y="104" width="164" height="12" rx="4"/>';
+ s+='<rect x="34" y="116" width="132" height="14" rx="4" fill="#cfc3aa"/>';
+ s+='<rect x="18" y="130" width="164" height="14" rx="4"/>';
+ s+='</g></svg>';
+ return s;
+}
+function waSend(text){return 'https://wa.me/79283845080?text='+encodeURIComponent(text);}
 
 function $(s){return document.querySelector(s);}
 function $$(s){return Array.prototype.slice.call(document.querySelectorAll(s));}
@@ -576,6 +636,19 @@ function exitTest(){
 }
 function updateTestChip(){var c=$('#testChip');if(c)c.hidden=!app.test;}
 
+function waOrderText(o){
+ var t='Заказ из приложения АСК-Фасад\n';
+ t+='№ '+o.id+' · '+o.dateStr+'\n';
+ t+='Клиент: '+o.user.name+'\nТелефон: '+o.user.phone+'\n';
+ t+='———\n';
+ t+=o.lines.join('\n');
+ t+='\n———\nИтого: '+fmt(o.total)+' ₽';
+ if(o.decor){t+='\n(цены декора уточняются у менеджера)';}
+ else{t+='\nОплата: '+o.pay;}
+ t+='\nГотовность: '+o.readyStr;
+ return waSend(t);
+}
+
 function patternBrick(b,j,seed,opt){
  opt=opt||{};var W=opt.W||360,H=opt.H||210,bw=opt.bw||56,bh=opt.bh||24,gap=opt.gap||6;
  var r=rng(hashStr(b+'|'+j)+(seed||0)*977),out='',y=0,row=0;
@@ -612,7 +685,7 @@ function comboSVG(){
  }
  var t=draft.tile!=null?TILES[draft.tile]:null;
  var fb2=patternTilePreview(t?t.c:'#a8503a',jC);
- if(t&&t.img)return photoOr(t.img,fb2,t.n);
+ if(t&&t.img)return photoOr(t.img,fb2,'Плитка №'+t.n);
  return fb2;
 }
 function brickName(){return draft.brick==='custom'?'свой: '+(draft.customText||'—'):(draft.brick!=null?('№'+BRICK_COLORS[draft.brick].n):'—');}
@@ -661,6 +734,8 @@ function render(){
  var draftScreens={format:1,brick:1,joint:1,tile:1,thick:1,calc:1,pay:1};
  if(draftScreens[scr]&&!draft){app.stack=[{name:app.user?'home':'auth'}];return render();}
  if(scr==='home'&&!app.user){app.stack=[{name:'auth'}];scr='auth';}
+ if((scr==='decorlist'||scr==='decoritem')&&!top.params){app.stack=[{name:'home'}];return render();}
+ if(scr==='success'&&!app.user){app.stack=[{name:'auth'}];scr='auth';}
  $('#hdr').hidden=(scr==='auth');
  $('#backBtn').hidden=!(app.stack.length>1&&scr!=='home');
  updateTestChip();
@@ -678,6 +753,9 @@ function render(){
  else if(scr==='success')html=screenSuccess(top.params.id);
  else if(scr==='orders')html=screenOrders();
  else if(scr==='pin')html=screenPin();
+ else if(scr==='decor')html=screenDecor();
+ else if(scr==='decorlist')html=screenDecorList(top.params);
+ else if(scr==='decoritem')html=screenDecorItem(top.params);
  var el=$('#scr');el.innerHTML=html;el.scrollTop=0;
  if(binders[scr])binders[scr]();
 }
@@ -698,7 +776,7 @@ function swBrick(i,sel){
 function swTile(i,sel){
  var t=TILES[i];
  var fb=patternTileSwatch(t.c);
- return '<button class="sq '+(sel?'sel':'')+'" data-i="'+i+'"><div class="sqimg">'+photoOr(t.img,fb,t.n)+'</div><div class="swn">'+t.n+'</div><span class="ck">'+ic('check')+'</span></button>';
+ return '<button class="sq '+(sel?'sel':'')+'" data-i="'+i+'"><div class="sqimg">'+photoOr(t.img,fb,'Плитка №'+t.n)+'</div><div class="swn">'+t.n+'</div><span class="ck">'+ic('check')+'</span></button>';
 }
 function screenAuth(){
  return '<div class="pad se"><div class="center" style="margin-top:22px;display:flex;justify-content:center">'
@@ -711,7 +789,7 @@ function screenAuth(){
  +'<div class="ferr" id="telErr" hidden>Введите номер полностью</div>'
  +'<button class="btn bp" id="authBtn">Войти</button>'
  +'<button class="btn bg2" id="testBtn">Войти в тестовом режиме</button>'
- +'<div class="sub center" style="margin-top:8px;font-size:12px">Тестовый режим: быстрый проход всех шагов заказа без регистрации</div></div>';
+ +'<div class="sub center" style="margin-top:8px;font-size:12px">Заказы передаются менеджеру через WhatsApp — с номера, указанного при входе</div></div>';
 }
 function screenHome(){
  var nm=app.user.name.split(' ')[1]||app.user.name.split(' ')[0];
@@ -721,6 +799,7 @@ function screenHome(){
  +'<button class="tcard" data-type="brick"><div class="timg">'+photoOr('home-brick.jpg',FORMATS[0].draw('#bd5c38','#cfc5b4',200,200),'Гибкий кирпич')+'</div><div class="tname"><span>Гибкий кирпич</span>'+ic('chev')+'</div><div class="tprice">от '+fmt(PRICE_BRICK[3])+' ₽/м²</div></button>'
  +'<button class="tcard" data-type="ceram"><div class="timg">'+photoOr('home-ceram.jpg',patternTileSwatch('#a8503a'),'Керамика')+'</div><div class="tname"><span>Керамика</span>'+ic('chev')+'</div><div class="tprice">от '+fmt(PRICE_CERAM[4])+' ₽/м²</div></button>'
  +'</div>'
+ +'<button class="tcard tcard-center" data-type="decor"><div class="timg">'+photoOr('home-decor.jpg',decorCoverSVG(),'Фасадный декор')+'</div><div class="tname"><span>Фасадный декор</span>'+ic('chev')+'</div><div class="tprice">каталог элементов</div></button>'
  +'<div class="note">'+ic('clock')+'<span>Срок изготовления — '+LEAD_DAYS+' рабочих дней со следующего дня после оформления заказа.</span></div>'
  +'<div class="cb" style="margin-top:16px">'
  +'<div class="ch" style="margin-bottom:4px"><b>Что такое термопанель?</b></div>'
@@ -734,6 +813,7 @@ function screenHome(){
  +'<div class="hint"><b style="color:var(--accent);min-width:15px;text-align:center;flex:none">1</b><span>Выберите тип, формат и цвет панели, затем толщину утеплителя.</span></div>'
  +'<div class="hint"><b style="color:var(--accent);min-width:15px;text-align:center;flex:none">2</b><span>Укажите площадь — приложение само посчитает стоимость вместе с клеем-пеной и затиркой.</span></div>'
  +'<div class="hint"><b style="color:var(--accent);min-width:15px;text-align:center;flex:none">3</b><span>Оплатите онлайн или наличными в офисе — заказ будет готов через '+LEAD_DAYS+' рабочих дней.</span></div>'
+ +'<div class="hint"><b style="color:var(--accent);min-width:15px;text-align:center;flex:none">4</b><span>Отправьте заказ менеджеру в WhatsApp одним нажатием — он поступит в работу.</span></div>'
  +'</div>'
  +'<div class="cb">'
  +'<div class="ch" style="margin-bottom:4px"><b>Связаться с менеджером</b></div>'
@@ -781,12 +861,12 @@ function screenJoint(){
  }else{
   var t=draft.tile!=null?TILES[draft.tile]:null;
   var fb2=patternTilePreview(t?t.c:'#a8503a',jC);
-  if(t&&t.img){big=photoOr(t.img,fb2,t.n);jnote='Фото реального образца «'+t.n+'». Шов на фото заводской — выбранный шов отмечен плитками ниже.';}
+  if(t&&t.img){big=photoOr(t.img,fb2,'Плитка №'+t.n);jnote='Фото реального образца (плитка №'+t.n+'). Шов на фото заводской — выбранный шов отмечен плитками ниже.';}
   else big=fb2;
  }
  var cap=draft.type==='brick'
   ?('Кирпич «'+brickName()+'» · шов «'+jointName()+'»')
-  :('Плитка «'+(draft.tile!=null?TILES[draft.tile].n:'—')+'» · шов «'+jointName()+'»');
+  :('Плитка '+(draft.tile!=null?('№'+TILES[draft.tile].n):'—')+' · шов «'+jointName()+'»');
  var out='';
  out+='<button class="sq '+(draft.joint==='custom'?'sel':'')+'" id="jcustomBtn"><div class="sqimg custom">'+ic('palette')+'</div><div class="sqname">Свой цвет</div><div class="sqdesc">под заказ</div><span class="ck">'+ic('check')+'</span></button>';
  for(var i=0;i<JOINTS.length;i++){
@@ -826,7 +906,7 @@ function screenCalc(){
  if(getArea()>0)autoAssign();
  var recap=draft.type==='brick'
   ?(FORMATS[draft.format].n+' · кирпич '+brickName()+' · шов «'+jointName()+'»')
-  :('Плитка «'+TILES[draft.tile].n+'» · шов «'+jointName()+'»');
+  :('Плитка '+(draft.tile!=null?('№'+TILES[draft.tile].n):'—')+' · шов «'+jointName()+'»');
  var gHint=draft.type==='brick'?'расход — 5 кг на каждые 50 м², продажа кратно 5 кг':'расход — одно ведро 5 кг примерно на 3 м² стыков';
  var testBtn=app.test?'<button class="btn bp" id="fillTest" style="margin-top:12px;height:46px">Подставить тестовые данные · 50 м²</button>':'';
  return '<div class="pad se" style="padding-bottom:10px">'+stepsBar(stepTotal())
@@ -878,38 +958,57 @@ function screenPay(){
 function screenSuccess(id){
  var o=null;
  for(var i=0;i<app.orders.length;i++)if(app.orders[i].id===id)o=app.orders[i];
- if(!o)o={id:'—',total:0,readyStr:'',pay:'',payKind:'online'};
+ if(!o)o={id:'—',total:0,readyStr:'',pay:'',payKind:'online',lines:[]};
+ var isDecor=!!o.decor;
  var isCash=(o.payKind==='cash');
- var msg=isCash
-  ?'Ваш заказ успешно сформирован, заказ поступит в работу после оплаты в нашем офисе'
-  :'Ваш заказ успешно сформирован и отправлен в производство';
- var payRow=isCash
-  ?'<div class="okrow"><span>Статус оплаты</span><b class="warn">Ожидается оплата в офисе</b></div>'
-  :'<div class="okrow"><span>Статус оплаты</span><b class="ok">Оплачено онлайн</b></div>';
- var testHint=app.test?'<div class="note" style="margin-top:14px">'+ic('info')+'<span>Тестовый режим: заказ уже сохранён — откройте «Мои заказы», чтобы увидеть, как он выглядит. Там же код владельца 2468 покажет его в «Все заказы».</span></div>':'';
+ var msg,rows;
+ if(isDecor){
+  msg='Ваша заявка успешно сформирована — менеджер свяжется с вами для подтверждения';
+  rows='<div class="okrow"><span>Количество</span><b>'+(o.qty||1)+' шт</b></div>'
+   +'<div class="okrow"><span>Клей-пена</span><b>'+(o.glue||0)+' балл.</b></div>';
+ }else{
+  msg=isCash
+   ?'Ваш заказ успешно сформирован, заказ поступит в работу после оплаты в нашем офисе'
+   :'Ваш заказ успешно сформирован и отправлен в производство';
+  rows=(isCash
+   ?'<div class="okrow"><span>Статус оплаты</span><b class="warn">Ожидается оплата в офисе</b></div>'
+   :'<div class="okrow"><span>Статус оплаты</span><b class="ok">Оплачено онлайн</b></div>');
+ }
+ var waLabel=isDecor?'Отправить заявку менеджеру':'Отправить заказ менеджеру';
+ var sendNote=isDecor
+  ?'Нажмите кнопку — заявка придёт менеджеру в WhatsApp с вашего номера, и он свяжется с вами.'
+  :'Нажмите кнопку — заказ придёт менеджеру в WhatsApp с вашего номера и поступит в обработку.';
+ var testHint=app.test?'<div class="note" style="margin-top:14px">'+ic('info')+'<span>Тестовый режим: при отправке в WhatsApp реально писать на номер менеджера — убедитесь, что удобно тестировать, или отмените отправку.</span></div>':'';
  return '<div class="pad se center">'
  +'<svg class="okmark" viewBox="0 0 64 64"><circle cx="32" cy="32" r="29" fill="none" stroke="#4e7d5b" stroke-width="3"/><path d="M20 33l9 9 16-18" fill="none" stroke="#4e7d5b" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>'
- +'<div class="t">Заказ №'+o.id+' оформлен</div>'
+ +'<div class="t">'+(isDecor?'Заявка №'+o.id+' оформлена':'Заказ №'+o.id+' оформлен')+'</div>'
  +'<div class="sub center" style="margin-top:2px"><b>'+msg+'</b></div>'
- +'<div class="okcard" style="text-align:left"><div class="okrow"><span>Способ оплаты</span><b>'+o.pay+'</b></div>'
- +payRow
- +'<div class="okrow"><span>Срок изготовления</span><b>'+LEAD_DAYS+' рабочих дней</b></div>'
- +'<div class="okrow"><span>Дата готовности</span><b>'+o.readyStr+'</b></div></div>'
+ +'<div class="okcard" style="text-align:left">'
+ +(isDecor?'':'<div class="okrow"><span>Способ оплаты</span><b>'+o.pay+'</b></div>')
+ +rows
+ +'<div class="okrow"><span>Итого</span><b>'+(o.total>0?fmt(o.total)+' ₽':'уточняется')+'</b></div>'
+ +'<div class="okrow"><span>Готовность</span><b>'+o.readyStr+'</b></div></div>'
+ +'<a class="btn bwa" style="text-decoration:none" href="'+waOrderText(o)+'" target="_blank" rel="noopener">'+ic('wa')+waLabel+'</a>'
+ +'<div class="hint center" style="justify-content:center">'+ic('info')+'<span>'+sendNote+'</span></div>'
  +testHint
  +'<button class="btn bd" id="okHome">На главную</button>'
- +'<button class="btn bg2" id="okOrders">Мои заказы</button></div>';
+ +'<button class="btn bg2" id="okOrders">'+(isDecor?'Мои заявки':'Мои заказы')+'</button></div>';
 }
 function orderCard(o){
  var st='';for(var i=0;i<STATUSES.length;i++)if(STATUSES[i].id===o.status)st=STATUSES[i].t;
  var adminMode=app.admin&&app.tab==='all';
  var unpaid=(o.payKind==='cash')?'<span class="unpaid"> · ожидает оплаты</span>':'';
+ var totalRow='<div class="octotal"><span>Итого</span><b>'+(o.total>0?fmt(o.total)+' ₽':'уточняется')+'</b></div>';
+ var foot=o.decor
+  ?'Заявка на декор · согласуется с менеджером'
+  :o.pay+unpaid+' · готовность: '+o.readyStr;
  return '<div class="ocard"><div class="ochead"><b>№ '+o.id+'</b>'
  +'<button class="chip '+o.status+'" data-oid="'+o.id+'"'+(adminMode?'':' disabled')+'>'+st+'</button></div>'
  +'<div class="ocdate">'+o.dateStr+'</div>'
  +'<div class="ocuser">'+o.user.name+' · '+o.user.phone+'</div>'
  +'<div class="ocbody">'+o.lines.join('<br>')+'</div>'
- +'<div class="octotal"><span>Итого</span><b>'+fmt(o.total)+' ₽</b></div>'
- +'<div class="ocfoot">'+o.pay+unpaid+' · готовность: '+o.readyStr+'</div></div>';
+ +totalRow
+ +'<div class="ocfoot">'+foot+'</div></div>';
 }
 function screenOrders(){
  var list=app.tab==='all'?app.orders:app.orders.filter(function(o){return o.user.phone===app.user.phone;});
@@ -936,6 +1035,53 @@ function screenPin(){
  +'<div class="sub">Введите 4-значный код доступа</div>'
  +'<div class="pindots">'+dots+'</div><div class="pinpad">'+out+'</div>'
  +'<div class="hint" style="justify-content:center;margin-top:18px">'+ic('info')+'<span>демо-код: '+ADMIN_PIN+'</span></div></div>';
+}
+function screenDecor(){
+ var out='';
+ for(var i=0;i<DECOR.length;i++){
+  var c=DECOR[i];
+  out+='<button class="sq dcat" data-cat="'+i+'"><div class="sqimg">'+photoOr(c.img,decorCatFallback(i),c.n)+'</div><div class="sqname">'+c.n+'</div><div class="sqdesc">'+c.count+' вариантов</div></button>';
+ }
+ return '<div class="pad se"><div class="t">Фасадный декор</div>'
+ +'<div class="sub">Декоративные элементы для отделки фасада — выберите категорию</div>'
+ +'<div class="g2">'+out+'</div>'
+ +'<div class="note" style="margin-top:16px">'+ic('info')+'<span>Не нашли нужный элемент? Свяжитесь с менеджером — подберём под ваш проект.</span></div></div>';
+}
+function screenDecorList(p){
+ var cat=DECOR[p.cat];
+ var out='';
+ for(var n=1;n<=cat.count;n++){
+  var pr=decorPrice(p.cat,n);
+  out+='<button class="sq" data-item="'+n+'"><div class="sqimg">'+photoOr(decorItemFile(p.cat,n),decorFallback(n),'Декор №'+n,true)+'</div><div class="swn">№'+n+'</div><div class="sprice">'+fmt(pr)+' ₽/шт</div><span class="ck">'+ic('check')+'</span></button>';
+ }
+ return '<div class="pad se"><div class="t">'+cat.n+'</div>'
+ +'<div class="sub">Выберите номер элемента — всего '+cat.count+' вариантов</div>'
+ +(cat.twoM?'<div class="note">'+ic('info')+'<span>Все элементы имеют длину 2 метра.</span></div>':'')
+ +'<div class="g3">'+out+'</div></div>';
+}
+function screenDecorItem(p){
+ var cat=DECOR[p.cat];
+ var price=decorPrice(p.cat,p.item);
+ var big=photoOr(decorItemFile(p.cat,p.item),decorFallback(p.item),'Декор №'+p.item);
+ var twoM=cat.twoM?'<div class="note">'+ic('info')+'<span>Все элементы имеют длину <b>2 метра</b>. Количество указывайте в штуках.</span></div>':'';
+ return '<div class="pad se"><div class="t">'+cat.n+' · №'+p.item+'</div>'
+ +'<div class="ditem">'+big+'</div>'
+ +'<div class="cb"><div class="ch" style="margin-bottom:4px"><b>Цена за шт</b><b style="color:var(--accent)">'+fmt(price)+' ₽</b></div>'
+ +'<div class="ch" style="margin-bottom:6px"><b>Количество</b></div><div class="stp">'
+ +'<button class="stb" data-act="minus" data-f="qty">'+ic('minus')+'</button>'
+ +'<input id="qtyInput" class="stin" inputmode="numeric" value="1"><span class="stu">шт</span>'
+ +'<button class="stb" data-act="plus" data-f="qty">'+ic('plus')+'</button></div></div>'
+ +'<div class="cb"><div class="ch"><b>'+ADHESIVE.name+'</b></div><div class="stp">'
+ +'<button class="stb" data-act="minus" data-f="dglue">'+ic('minus')+'</button>'
+ +'<input id="dglueInput" class="stin" inputmode="numeric" value="0"><span class="stu">балл.</span>'
+ +'<button class="stb" data-act="plus" data-f="dglue">'+ic('plus')+'</button></div>'
+ +'<div class="hint">'+ic('info')+'<span>'+fmt(ADHESIVE.price)+' ₽/баллон — количество выбираете самостоятельно</span></div></div>'
+ +twoM
+ +'<div class="cb"><div class="dtotal"><span>Итого</span><b id="dtotal">'+fmt(price*1)+' ₽</b></div>'
+ +(price===0?'<div class="hint">'+ic('info')+'<span>Цена элемента ещё не задана — итоговую сумму уточнит менеджер.</span></div>':'')
+ +'</div>'
+ +'<button class="btn bp" id="dorder">Оформить заказ</button>'
+ +'<a class="btn bg2" style="text-decoration:none" href="'+waSend('Здравствуйте! Вопрос по элементу декора: '+cat.n+' №'+p.item)+'" target="_blank" rel="noopener">'+ic('wa')+'Задать вопрос менеджеру</a></div>';
 }
 
 function maskPhone(input){
@@ -979,6 +1125,7 @@ function stepper(f,dir){
  }
  recalc();
 }
+function nextOrderId(){return 'АС-'+String(app.orders.length+1).padStart(4,'0');}
 function createOrder(payName,payKind){
  var p=draft.type==='brick'?PRICE_BRICK:PRICE_CERAM;
  var g=draft.type==='brick'?GROUT_BRICK:GROUT_CERAM;
@@ -989,16 +1136,30 @@ function createOrder(payName,payKind){
    'Толщина: '+draft.thickness+' см · '+fmtArea(getArea())+' м² × '+fmt(p[draft.thickness])+' ₽',
    ADHESIVE.name+' × '+draft.glue+' · Затирка × '+draft.grout+' '+g.unit];
  }else{
-  lines=['Керамика · плитка «'+TILES[draft.tile].n+'» (Керамин)',
+  lines=['Керамика · плитка '+(draft.tile!=null?('№'+TILES[draft.tile].n):'—')+' (Керамин)',
    'Шов: '+jointName(),
    'Толщина: '+draft.thickness+' см · '+fmtArea(getArea())+' м² × '+fmt(p[draft.thickness])+' ₽',
    ADHESIVE.name+' × '+draft.glue+' · Затирка × '+draft.grout+' '+g.unit];
  }
- var o={id:'АС-'+String(app.orders.length+1).padStart(4,'0'),
+ var o={id:nextOrderId(),
   dateStr:new Date().toLocaleString('ru-RU',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}),
   user:{name:app.user.name,phone:app.user.phone},
   lines:lines,total:calcTotal(),pay:payName,payKind:payKind||'online',
   readyStr:fmtDate(nextBusinessDate()),status:'new'};
+ app.orders.unshift(o);saveOrders();return o;
+}
+function createDecorOrder(ci,item,qty,glue){
+ var c=DECOR[ci];
+ var price=decorPrice(ci,item);
+ var total=price*qty+glue*ADHESIVE.price;
+ var o={id:nextOrderId(),
+  dateStr:new Date().toLocaleString('ru-RU',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}),
+  user:{name:app.user.name,phone:app.user.phone},
+  decor:true,qty:qty,glue:glue,
+  lines:[c.n+' №'+item+' · '+qty+' шт × '+fmt(price)+' ₽',
+   ADHESIVE.name+' × '+glue+' балл. × '+fmt(ADHESIVE.price)+' ₽'],
+  total:total,pay:'Согласуется с менеджером',payKind:'decor',
+  readyStr:'согласуется с менеджером',status:'new'};
  app.orders.unshift(o);saveOrders();return o;
 }
 function updateBadge(){
@@ -1027,8 +1188,10 @@ var binders={
  home:function(){
   $$('.tcard').forEach(function(b){
    b.onclick=function(){
-    newDraft(b.dataset.type);
-    go(b.dataset.type==='brick'?'format':'tile');
+    var t=b.dataset.type;
+    if(t==='decor'){go('decor');return;}
+    newDraft(t);
+    go(t==='brick'?'format':'tile');
    };
   });
   var mc=$('#maxCopy');
@@ -1167,6 +1330,52 @@ var binders={
     },180);
    };
   });
+ },
+ decor:function(){
+  $$('.dcat').forEach(function(b){
+   b.onclick=function(){go('decorlist',{cat:+b.dataset.cat});};
+  });
+ },
+ decorlist:function(){
+  var p=app.stack[app.stack.length-1].params||{cat:0};
+  $$('.sq[data-item]').forEach(function(b){
+   b.onclick=function(){go('decoritem',{cat:p.cat,item:+b.dataset.item});};
+  });
+ },
+ decoritem:function(){
+  var p=app.stack[app.stack.length-1].params||{cat:0,item:1};
+  var price=decorPrice(p.cat,p.item);
+  var inp=$('#qtyInput'),gin=$('#dglueInput');
+  function dtotal(){
+   var q=Math.max(1,parseInt(inp.value)||1);
+   var g=Math.max(0,parseInt(gin.value)||0);
+   var t=$('#dtotal');if(t)t.textContent=fmt(price*q+g*ADHESIVE.price)+' ₽';
+  }
+  $$('.stb').forEach(function(b){
+   b.onclick=function(){
+    var dir=(b.dataset.act==='plus')?1:-1;
+    if(b.dataset.f==='qty'){
+     var v=(parseInt(inp.value)||1)+dir;
+     if(v<1)v=1;
+     inp.value=v;
+    }else{
+     var gv=(parseInt(gin.value)||0)+dir;
+     if(gv<0)gv=0;
+     gin.value=gv;
+    }
+    dtotal();
+   };
+  });
+  inp.addEventListener('input',dtotal);
+  gin.addEventListener('input',dtotal);
+  $('#dorder').onclick=function(){
+   var qty=Math.max(1,parseInt(inp.value)||1);
+   var glue=Math.max(0,parseInt(gin.value)||0);
+   var o=createDecorOrder(p.cat,p.item,qty,glue);
+   app.stack=[{name:'home'},{name:'success',params:{id:o.id}}];
+   render();
+   toast('Заявка оформлена — отправьте её менеджеру');
+  };
  }
 };
 
