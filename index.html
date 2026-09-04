@@ -24,7 +24,7 @@ h1.t{font-size:20px;line-height:1.25;margin:8px 0 6px;font-weight:800}
 .tchip{border:none;background:var(--warn);color:#fff;font:inherit;font-size:10px;font-weight:800;letter-spacing:.08em;padding:4px 9px;border-radius:99px;cursor:pointer}
 .hbtn{position:relative;width:40px;height:40px;border:none;background:transparent;color:#f4eee3;border-radius:12px;display:flex;align-items:center;justify-content:center;cursor:pointer}
 .hbtn:active{background:rgba(255,255,255,.12)}
-#badge{position:absolute;top:3px;right:2px;min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:var(--accent);color:#fff;font-style:normal;font-size:10.5px;font-weight:700;display:flex;align-items:center;justify-content:center}
+#badge,#cartBadge{position:absolute;top:3px;right:2px;min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:var(--accent);color:#fff;font-style:normal;font-size:10.5px;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:system-ui,Arial,sans-serif}
 main{flex:1;overflow-y:auto;scrollbar-width:none;display:flex;flex-direction:column;position:relative}
 main::-webkit-scrollbar{display:none}
 .se{animation:se .3s ease}
@@ -36,6 +36,7 @@ main::-webkit-scrollbar{display:none}
 .bg2{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
 .bd{background:var(--dark);color:#f4eee3}
 .lnk{border:none;background:none;color:var(--accent);font:inherit;font-size:13px;font-weight:700;cursor:pointer;padding:2px 4px}
+.lnk.danger{color:#c0392b}
 .steps{display:flex;gap:5px;margin:2px 0 4px}
 .steps i{height:4px;border-radius:2px;flex:1;background:var(--line)}
 .steps i.on{background:var(--accent)}
@@ -134,8 +135,9 @@ main::-webkit-scrollbar{display:none}
 .ocard{background:var(--card);border:1.5px solid var(--line);border-radius:16px;padding:13px 14px;margin-top:12px}
 .ochead{display:flex;justify-content:space-between;align-items:center;gap:8px}
 .ochead b{font-size:13.5px}
-.chip{border:none;border-radius:99px;color:#fff;font:inherit;font-size:11px;font-weight:800;padding:5px 11px}
+.chip{border:none;border-radius:99px;color:#fff;font:inherit;font-size:11px;font-weight:800;padding:5px 11px;cursor:pointer}
 .chip.new{background:var(--accent)}.chip.work{background:var(--warn)}.chip.ready{background:var(--ok)}.chip.done{background:#a2958a}
+.chip.cancel{background:#9aa0a6}
 .ocdate{font-size:11px;color:var(--muted);margin-top:3px}
 .ocuser{font-size:13px;font-weight:700;margin-top:7px}
 .ocbody{font-size:12.5px;color:var(--muted);line-height:1.6;margin-top:6px;padding-top:7px;border-top:1px dashed var(--line)}
@@ -212,6 +214,7 @@ main::-webkit-scrollbar{display:none}
     </div>
     <button class="tchip" id="testChip" hidden>ТЕСТ · ВЫЙТИ</button>
     <button class="hbtn" id="callBtn"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v2.6a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.4 19.4 0 0 1-6-6A19.8 19.8 0 0 1 2.1 3.7 2 2 0 0 1 4.1 1.5h2.6a2 2 0 0 1 2 1.7c.13.96.36 1.9.7 2.8a2 2 0 0 1-.45 2.1L7.7 9.3a16 16 0 0 0 6 6l1.2-1.25a2 2 0 0 1 2.1-.45c.9.34 1.84.57 2.8.7a2 2 0 0 1 1.7 2z"/></svg></button>
+    <button class="hbtn" id="cartBtn"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.6"/><circle cx="17" cy="20" r="1.6"/><path d="M3 4h2l2.6 11.5a1.6 1.6 0 0 0 1.6 1.3h7.6a1.6 1.6 0 0 0 1.6-1.3L20.5 8H6"/></svg><i id="cartBadge" hidden></i></button>
     <button class="hbtn" id="ordersBtn"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h14v18l-2.3-1.5-2.4 1.5-2.3-1.5L9.7 21l-2.4-1.5L5 21V3z"/><path d="M9 8h6M9 12h6"/></svg><i id="badge" hidden></i></button>
   </div>
   <main id="scr"></main>
@@ -291,7 +294,8 @@ var ICONS={
  phone:'<path d="M22 16.9v2.6a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.4 19.4 0 0 1-6-6A19.8 19.8 0 0 1 2.1 3.7 2 2 0 0 1 4.1 1.5h2.6a2 2 0 0 1 2 1.7c.13.96.36 1.9.7 2.8a2 2 0 0 1-.45 2.1L7.7 9.3a16 16 0 0 0 6 6l1.2-1.25a2 2 0 0 1 2.1-.45c.9.34 1.84.57 2.8.7a2 2 0 0 1 1.7 2z"/>',
  wa:'<path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5c-1.4 0-2.8-.35-4-1L3 20l1-5.5a8.5 8.5 0 1 1 17-3z"/><path d="M8.5 10.5h.01M12 10.5h.01M15.5 10.5h.01"/>',
  tg:'<path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/>',
- mx:'<path d="M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>'
+ mx:'<path d="M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',
+ cart:'<circle cx="9" cy="20" r="1.6"/><circle cx="17" cy="20" r="1.6"/><path d="M3 4h2l2.6 11.5a1.6 1.6 0 0 0 1.6 1.3h7.6a1.6 1.6 0 0 0 1.6-1.3L20.5 8H6"/>'
 };
 function ic(n){return '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+ICONS[n]+'</svg>';}
 
@@ -383,15 +387,12 @@ var TILES=[
  {n:'29',c:'#5c4232',img:'tile-29.jpg'},
  {n:'30',c:'#33302e',img:'tile-30.jpg'}];
 
-/* Фасадный декор.
-   price  — цена по умолчанию для всех элементов категории (₽ за шт)
-   prices — индивидуальные цены по номерам, например prices:{5:400,12:450}
-   Углы (index 3) — без пометки про 2 метра */
+/* Фасадный декор — ваши цены */
 var DECOR=[
- {n:'Карнизы',img:'decor-1.jpg',file:'karniz',count:100,twoM:true,price:0,prices:{1:1100, 2:1500, 3:1700, 4:1500, 5:4000, 6:2100, 7:2500, 8:3400, 9:4700, 10:4700, 11:1400, 12:1700, 13:1200, 14:4700, 15:3500, 16:1600, 17:3000, 18:3100, 19:1100, 20:2600, 21:800, 22:2900, 23:1000, 24:2000, 25:2000, 26:2600, 27:3400, 28:1300, 29:2400, 30:1400, 31:3100, 32:1800, 33:1000, 34:3400, 35:6400, 36:4900, 37:4500, 38:1300, 39:2100, 40:2500, 41:2000, 42:900, 43:2500, 44:1400, 45:4900, 46:2000, 47:2000, 48:1400, 49:5800, 50:4700, 51:2300, 52:1900, 53:1900, 54:1600, 55:2300, 56:2300, 57:2900, 58:2200, 59:10600, 60:2600, 61:2500, 62:8300, 63:2300, 64:4100, }},
- {n:'Молдинги',img:'decor-2.jpg',file:'molding',count:100,twoM:true,price:0,prices:{1:800, 2:800, 3:800, 4:800, 5:800, 6:800, 7:900, 8:800, 9:800, 10:800, 11:800, 12:800, 13:950, 14:800, 15:950, 16:800, 17:900, 18:800, 19:1050, 20:800, 21:1100, 22:800, 23:800, 24:800, 25:1100, 26:800, 27:1200, 28:800, 29:800, 30:900, 31:1400, 32:1700, 33:950, 34:1300, 35:800, 36:2300, 37:1600, 38:2500, 39:900, 40:950, 41:800, 42:800, 43:950, 44:900, 45:3800, 46:4300, 47:950, 48:800, 49:1200, 50:800, 51:800, 52:800, 53:950, 54:900, 55:1400, 56:800, 57:900, 58:800, 59:2100, 60:1750, 61:900, 62:1550, 63:800, 64:900, 65:900, 66:1400, 67:800, 68:1000, 69:800, 70:800, 71:950, 72:800, 73:800, 74:1000, 75:800, 76:1100, 77:1700, 78:1600, 79:1100, 80:1000, 81:1100, 82:1500, 83:850, 84:1250, 85:1150, 86:1600, 87:800,}},
- {n:'Подоконники',img:'decor-3.jpg',file:'podokonnik',count:100,twoM:true,price:0,prices:{1:1100, 2:1100, 3:1000, 4:1150, 5:1350, 6:1600, 7:1400, 8:1800, 9:1700, 10:1600,}},
- {n:'Углы',img:'decor-4.jpg',file:'ugol',count:15,twoM:false,price:0,prices:{1:350, 2:260, 3:310, 4:300, 5:400, 6:360, 7:320, 8:290, 9:270, 10:240, 11:310,}}];
+ {n:'Карнизы',img:'decor-1.jpg',file:'karniz',count:100,twoM:true,price:0,prices:{1:1100,2:1500,3:1700,4:1500,5:4000,6:2100,7:2500,8:3400,9:4700,10:4700,11:1400,12:1700,13:1200,14:4700,15:3500,16:1600,17:3000,18:3100,19:1100,20:2600,21:800,22:2900,23:1000,24:2000,25:2000,26:2600,27:3400,28:1300,29:2400,30:1400,31:3100,32:1800,33:1000,34:3400,35:6400,36:4900,37:4500,38:1300,39:2100,40:2500,41:2000,42:900,43:2500,44:1400,45:4900,46:2000,47:2000,48:1400,49:5800,50:4700,51:2300,52:1900,53:1900,54:1600,55:2300,56:2300,57:2900,58:2200,59:10600,60:2600,61:2500,62:8300,63:2300,64:4100}},
+ {n:'Молдинги',img:'decor-2.jpg',file:'molding',count:100,twoM:true,price:0,prices:{1:800,2:800,3:800,4:800,5:800,6:800,7:900,8:800,9:800,10:800,11:800,12:800,13:950,14:800,15:950,16:800,17:900,18:800,19:1050,20:800,21:1100,22:800,23:800,24:800,25:1100,26:800,27:1200,28:800,29:800,30:900,31:1400,32:1700,33:950,34:1300,35:800,36:2300,37:1600,38:2500,39:900,40:950,41:800,42:800,43:950,44:900,45:3800,46:4300,47:950,48:800,49:1200,50:800,51:800,52:800,53:950,54:900,55:1400,56:800,57:900,58:800,59:2100,60:1750,61:900,62:1550,63:800,64:900,65:900,66:1400,67:800,68:1000,69:800,70:800,71:950,72:800,73:800,74:1000,75:800,76:1100,77:1700,78:1600,79:1100,80:1000,81:1100,82:1500,83:850,84:1250,85:1150,86:1600,87:800}},
+ {n:'Подоконники',img:'decor-3.jpg',file:'podokonnik',count:100,twoM:true,price:0,prices:{1:1100,2:1100,3:1000,4:1150,5:1350,6:1600,7:1400,8:1800,9:1700,10:1600}},
+ {n:'Углы',img:'decor-4.jpg',file:'ugol',count:15,twoM:false,price:0,prices:{1:350,2:260,3:310,4:300,5:400,6:360,7:320,8:290,9:270,10:240,11:310}}];
 function decorPrice(ci,n){
  var c=DECOR[ci];
  return (c.prices&&c.prices[n]!=null)?c.prices[n]:c.price;
@@ -599,10 +600,12 @@ var LS={
  set:function(k,v){try{localStorage.setItem(k,v);}catch(e){}},
  del:function(k){try{localStorage.removeItem(k);}catch(e){}}
 };
-var app={stack:[],user:null,admin:false,orders:[],tab:'mine',pinBuf:'',test:false};
+var app={stack:[],user:null,admin:false,orders:[],cart:[],tab:'mine',pinBuf:'',test:false};
 var draft=null;
 var payPending=null;
+var lastScr=null;
 try{app.orders=JSON.parse(LS.get('asf_orders')||'[]');}catch(e){app.orders=[];}
+try{app.cart=JSON.parse(LS.get('asf_cart')||'[]');}catch(e){app.cart=[];}
 try{var su=LS.get('asf_user');if(su)app.user=JSON.parse(su);}catch(e){}
 app.admin=LS.get('asf_admin')==='1';
 app.test=LS.get('asf_test')==='1';
@@ -620,6 +623,61 @@ function glueNeed(a){return Math.max(1,Math.ceil(a/ADHESIVE.coverage));}
 function groutPacks(a){return draft.type==='brick'?Math.max(1,Math.ceil(a/50)):Math.max(1,Math.ceil(a/3));}
 function autoAssign(){var a=getArea();if(a<=0)return;draft.glue=glueNeed(a);draft.grout=groutPacks(a);}
 
+/* ===== Корзина ===== */
+function saveCart(){LS.set('asf_cart',JSON.stringify(app.cart));updateCartBadge();}
+function addToCart(it){app.cart.push(it);saveCart();}
+function removeCart(i){app.cart.splice(i,1);saveCart();}
+function clearCart(){app.cart=[];saveCart();}
+function updateCartBadge(){
+ var b=$('#cartBadge');if(!b)return;
+ b.hidden=!app.cart.length;b.textContent=app.cart.length;
+}
+function cfgArea(c){return parseFloat(String(c.area).replace(',','.'))||0;}
+function cfgJointName(c){return c.joint==='custom'?('свой: '+(c.jointText||'—')):(c.joint!=null?JOINTS[c.joint].n:'—');}
+function panelCartTotal(c){
+ var p=c.type==='brick'?PRICE_BRICK:PRICE_CERAM;
+ var g=c.type==='brick'?GROUT_BRICK:GROUT_CERAM;
+ return cfgArea(c)*(p[c.thickness]||0)+(c.glue||0)*ADHESIVE.price+(c.grout||0)*g.price;
+}
+function decorCartTotal(c){return decorPrice(c.cat,c.item)*c.qty+(c.glue||0)*ADHESIVE.price;}
+function panelCartLines(c){
+ var p=c.type==='brick'?PRICE_BRICK:PRICE_CERAM;
+ var g=c.type==='brick'?GROUT_BRICK:GROUT_CERAM;
+ var a=cfgArea(c),lines;
+ if(c.type==='brick'){
+  var col=(c.brick==='custom')?('свой: '+(c.customText||'—')):('№'+BRICK_COLORS[c.brick].n);
+  lines=['Гибкий кирпич · формат «'+(FORMATS[c.format]?FORMATS[c.format].n:'—')+'»',
+   'Кирпич: '+col+' · Шов: '+cfgJointName(c),
+   'Толщина: '+c.thickness+' см · '+fmtArea(a)+' м² × '+fmt(p[c.thickness])+' ₽'];
+ }else{
+  lines=['Керамика · плитка '+(c.tile!=null?('№'+TILES[c.tile].n):'—')+' (Керамин)',
+   'Шов: '+cfgJointName(c),
+   'Толщина: '+c.thickness+' см · '+fmtArea(a)+' м² × '+fmt(p[c.thickness])+' ₽'];
+ }
+ if((c.glue||0)>0)lines.push(ADHESIVE.name+' × '+c.glue+' балл. × '+fmt(ADHESIVE.price)+' ₽');
+ if((c.grout||0)>0)lines.push('Затирка × '+c.grout+' '+g.unit+' × '+fmt(g.price)+' ₽');
+ return lines;
+}
+function decorCartLines(c){
+ var pr=decorPrice(c.cat,c.item);
+ var lines=[DECOR[c.cat].n+' №'+c.item+' · '+c.qty+' шт × '+fmt(pr)+' ₽'];
+ if((c.glue||0)>0)lines.push(ADHESIVE.name+' × '+c.glue+' балл. × '+fmt(ADHESIVE.price)+' ₽');
+ return lines;
+}
+function cartLabel(c){
+ if(c.kind==='panel'){
+  if(c.type==='brick'){
+   var col=(c.brick==='custom')?'свой цвет':('№'+BRICK_COLORS[c.brick].n);
+   return 'Гибкий кирпич · '+((FORMATS[c.format])?FORMATS[c.format].n:'—')+' · кирпич '+col+' · шов '+cfgJointName(c)+' · '+c.thickness+' см · '+fmtArea(cfgArea(c))+' м²';
+  }
+  return 'Керамика · плитка '+(c.tile!=null?('№'+TILES[c.tile].n):'—')+' · шов '+cfgJointName(c)+' · '+c.thickness+' см · '+fmtArea(cfgArea(c))+' м²';
+ }
+ var lbl=DECOR[c.cat].n+' №'+c.item+' · '+c.qty+' шт';
+ if((c.glue||0)>0)lbl+=' · клей-пена ×'+c.glue;
+ return lbl;
+}
+function forceStack(name){app.stack=[{name:name,scroll:0}];lastScr=null;}
+
 function startTest(){
  app.user={name:TEST_USER.name,phone:TEST_USER.phone};
  app.test=true;
@@ -631,7 +689,7 @@ function startTest(){
 function exitTest(){
  app.test=false;LS.del('asf_test');
  app.user=null;LS.del('asf_user');
- app.stack=[{name:'auth'}];render();
+ forceStack('auth');render();
  toast('Тестовый режим выключен');
 }
 function updateTestChip(){var c=$('#testChip');if(c)c.hidden=!app.test;}
@@ -642,8 +700,8 @@ function waOrderText(o){
  t+='Клиент: '+o.user.name+'\nТелефон: '+o.user.phone+'\n';
  t+='———\n';
  t+=o.lines.join('\n');
- t+='\n———\nИтого: '+fmt(o.total)+' ₽';
- if(o.decor){t+='\n(цены декора уточняются у менеджера)';}
+ t+='\n———\nИтого: '+(o.total>0?fmt(o.total)+' ₽':'уточняется');
+ if(o.decor){t+='\n(заявка на декор)';}
  else{t+='\nОплата: '+o.pay;}
  t+='\nГотовность: '+o.readyStr;
  return waSend(t);
@@ -728,18 +786,20 @@ function hideSheetEl(el,cb){
 function openSheet(){showSheetEl($('#sheet'));}
 function closeSheet(){hideSheetEl($('#sheet'));}
 
+/* Навигация с запоминанием позиции прокрутки */
 function render(){
  if(!app.stack.length)return;
  var top=app.stack[app.stack.length-1],scr=top.name;
  var draftScreens={format:1,brick:1,joint:1,tile:1,thick:1,calc:1,pay:1};
- if(draftScreens[scr]&&!draft){app.stack=[{name:app.user?'home':'auth'}];return render();}
- if(scr==='home'&&!app.user){app.stack=[{name:'auth'}];scr='auth';}
- if((scr==='decorlist'||scr==='decoritem')&&!top.params){app.stack=[{name:'home'}];return render();}
- if(scr==='success'&&!app.user){app.stack=[{name:'auth'}];scr='auth';}
+ if(draftScreens[scr]&&!draft){forceStack(app.user?'home':'auth');return render();}
+ if(scr==='home'&&!app.user){forceStack('auth');top=app.stack[0];scr='auth';}
+ if((scr==='decorlist'||scr==='decoritem')&&!top.params){forceStack('home');top=app.stack[0];scr='home';}
+ if((scr==='success'||scr==='cart')&&!app.user){forceStack('auth');top=app.stack[0];scr='auth';}
  $('#hdr').hidden=(scr==='auth');
  $('#backBtn').hidden=!(app.stack.length>1&&scr!=='home');
  updateTestChip();
  updateBadge();
+ updateCartBadge();
  var html='';
  if(scr==='auth')html=screenAuth();
  else if(scr==='home')html=screenHome();
@@ -756,12 +816,26 @@ function render(){
  else if(scr==='decor')html=screenDecor();
  else if(scr==='decorlist')html=screenDecorList(top.params);
  else if(scr==='decoritem')html=screenDecorItem(top.params);
- var el=$('#scr');el.innerHTML=html;el.scrollTop=0;
+ else if(scr==='cart')html=screenCart();
+ var el=$('#scr');
+ if(scr===lastScr&&el.children.length){top.scroll=el.scrollTop;}
+ el.innerHTML=html;
+ el.scrollTop=top.scroll||0;
+ lastScr=scr;
  if(binders[scr])binders[scr]();
 }
-function go(name,params){app.stack.push({name:name,params:params});render();}
-function back(){app.stack.pop();render();}
-function home(){app.stack=[{name:app.user?'home':'auth'}];render();}
+function go(name,params){
+ var el=$('#scr'),cur=app.stack[app.stack.length-1];
+ if(cur&&el)cur.scroll=el.scrollTop;
+ app.stack.push({name:name,params:params,scroll:0});
+ render();
+}
+function back(){
+ var el=$('#scr'),cur=app.stack[app.stack.length-1];
+ if(cur&&el)cur.scroll=el.scrollTop;
+ app.stack.pop();render();
+}
+function home(){forceStack(app.user?'home':'auth');render();}
 
 function stepsBar(n){
  var t=stepTotal(),out='';
@@ -812,8 +886,8 @@ function screenHome(){
  +'<div class="ch" style="margin-bottom:4px"><b>Как оформить заказ?</b></div>'
  +'<div class="hint"><b style="color:var(--accent);min-width:15px;text-align:center;flex:none">1</b><span>Выберите тип, формат и цвет панели, затем толщину утеплителя.</span></div>'
  +'<div class="hint"><b style="color:var(--accent);min-width:15px;text-align:center;flex:none">2</b><span>Укажите площадь — приложение само посчитает стоимость вместе с клеем-пеной и затиркой.</span></div>'
- +'<div class="hint"><b style="color:var(--accent);min-width:15px;text-align:center;flex:none">3</b><span>Оплатите онлайн или наличными в офисе — заказ будет готов через '+LEAD_DAYS+' рабочих дней.</span></div>'
- +'<div class="hint"><b style="color:var(--accent);min-width:15px;text-align:center;flex:none">4</b><span>Отправьте заказ менеджеру в WhatsApp одним нажатием — он поступит в работу.</span></div>'
+ +'<div class="hint"><b style="color:var(--accent);min-width:15px;text-align:center;flex:none">3</b><span>Оплатите онлайн, наличными в офисе или отправьте заявку менеджеру в WhatsApp.</span></div>'
+ +'<div class="hint"><b style="color:var(--accent);min-width:15px;text-align:center;flex:none">4</b><span>Не готовы оплатить сейчас? Отложите заказ в корзину — вернётесь к нему позже.</span></div>'
  +'</div>'
  +'<div class="cb">'
  +'<div class="ch" style="margin-bottom:4px"><b>Связаться с менеджером</b></div>'
@@ -943,7 +1017,7 @@ function screenPay(){
  var isCash=(draft.pay==='cash');
  var lbl=!draft.pay?'Выберите способ оплаты':(isCash?'Оформить заказ':'Оплатить '+fmt(t)+' ₽');
  var testNote=app.test
-  ?'<div class="note" style="margin-top:12px">'+ic('info')+'<span>Тестовый режим — деньги не списываются. Нажмите на способ оплаты, затем на кнопку ниже.</span></div>'
+  ?'<div class="note" style="margin-top:12px">'+ic('info')+'<span>Тестовый режим — деньги не списываются.</span></div>'
   :'';
  var note=isCash
   ?ic('info')+'<span>Заказ поступит в работу после оплаты наличными в нашем офисе. Менеджер свяжется с вами и согласует визит.</span>'
@@ -953,6 +1027,8 @@ function screenPay(){
  +'<div class="pays" id="payList">'+out+'</div>'
  +testNote
  +'<button class="btn bp" id="payBtn">'+lbl+'</button>'
+ +'<button class="btn bwa" id="waOrder">'+ic('wa')+'Отправить заявку менеджеру</button>'
+ +'<button class="btn bg2" id="toCart">'+ic('cart')+'Сохранить в корзину</button>'
  +'<div class="note" style="margin-top:14px">'+note+'</div></div>';
 }
 function screenSuccess(id){
@@ -961,11 +1037,15 @@ function screenSuccess(id){
  if(!o)o={id:'—',total:0,readyStr:'',pay:'',payKind:'online',lines:[]};
  var isDecor=!!o.decor;
  var isCash=(o.payKind==='cash');
+ var isWa=(o.payKind==='wa');
  var msg,rows;
  if(isDecor){
-  msg='Ваша заявка успешно сформирована — менеджер свяжется с вами для подтверждения';
+  msg='Ваша заявка успешно сформирована — отправьте её менеджеру для подтверждения';
   rows='<div class="okrow"><span>Количество</span><b>'+(o.qty||1)+' шт</b></div>'
-   +'<div class="okrow"><span>Клей-пена</span><b>'+(o.glue||0)+' балл.</b></div>';
+   +(((o.glue||0)>0)?'<div class="okrow"><span>Клей-пена</span><b>'+o.glue+' балл.</b></div>':'');
+ }else if(isWa){
+  msg='Ваша заявка успешно сформирована — отправьте её менеджеру через WhatsApp';
+  rows='<div class="okrow"><span>Статус оплаты</span><b class="warn">Согласуется с менеджером</b></div>';
  }else{
   msg=isCash
    ?'Ваш заказ успешно сформирован, заказ поступит в работу после оплаты в нашем офисе'
@@ -975,16 +1055,14 @@ function screenSuccess(id){
    :'<div class="okrow"><span>Статус оплаты</span><b class="ok">Оплачено онлайн</b></div>');
  }
  var waLabel=isDecor?'Отправить заявку менеджеру':'Отправить заказ менеджеру';
- var sendNote=isDecor
-  ?'Нажмите кнопку — заявка придёт менеджеру в WhatsApp с вашего номера, и он свяжется с вами.'
-  :'Нажмите кнопку — заказ придёт менеджеру в WhatsApp с вашего номера и поступит в обработку.';
- var testHint=app.test?'<div class="note" style="margin-top:14px">'+ic('info')+'<span>Тестовый режим: при отправке в WhatsApp реально писать на номер менеджера — убедитесь, что удобно тестировать, или отмените отправку.</span></div>':'';
+ var sendNote='Нажмите кнопку — '+(isDecor?'заявка':'заказ')+' придёт менеджеру в WhatsApp с вашего номера и поступит в обработку.';
+ var testHint=app.test?'<div class="note" style="margin-top:14px">'+ic('info')+'<span>Тестовый режим: при отправке в WhatsApp реально писать на номер менеджера — или отмените отправку.</span></div>':'';
  return '<div class="pad se center">'
  +'<svg class="okmark" viewBox="0 0 64 64"><circle cx="32" cy="32" r="29" fill="none" stroke="#4e7d5b" stroke-width="3"/><path d="M20 33l9 9 16-18" fill="none" stroke="#4e7d5b" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>'
  +'<div class="t">'+(isDecor?'Заявка №'+o.id+' оформлена':'Заказ №'+o.id+' оформлен')+'</div>'
  +'<div class="sub center" style="margin-top:2px"><b>'+msg+'</b></div>'
  +'<div class="okcard" style="text-align:left">'
- +(isDecor?'':'<div class="okrow"><span>Способ оплаты</span><b>'+o.pay+'</b></div>')
+ +(!isDecor?'<div class="okrow"><span>Способ оплаты</span><b>'+o.pay+'</b></div>':'')
  +rows
  +'<div class="okrow"><span>Итого</span><b>'+(o.total>0?fmt(o.total)+' ₽':'уточняется')+'</b></div>'
  +'<div class="okrow"><span>Готовность</span><b>'+o.readyStr+'</b></div></div>'
@@ -995,32 +1073,67 @@ function screenSuccess(id){
  +'<button class="btn bg2" id="okOrders">'+(isDecor?'Мои заявки':'Мои заказы')+'</button></div>';
 }
 function orderCard(o){
- var st='';for(var i=0;i<STATUSES.length;i++)if(STATUSES[i].id===o.status)st=STATUSES[i].t;
+ var isCancel=(o.status==='cancel');
+ var st='';
+ if(isCancel)st='Отменён менеджером';
+ else{for(var i=0;i<STATUSES.length;i++)if(STATUSES[i].id===o.status)st=STATUSES[i].t;}
  var adminMode=app.admin&&app.tab==='all';
  var unpaid=(o.payKind==='cash')?'<span class="unpaid"> · ожидает оплаты</span>':'';
  var totalRow='<div class="octotal"><span>Итого</span><b>'+(o.total>0?fmt(o.total)+' ₽':'уточняется')+'</b></div>';
- var foot=o.decor
-  ?'Заявка на декор · согласуется с менеджером'
-  :o.pay+unpaid+' · готовность: '+o.readyStr;
+ var foot=isCancel
+  ?'Заказ отменён менеджером'
+  :(o.decor
+    ?'Заявка на декор · согласуется с менеджером'
+    :o.pay+unpaid+' · готовность: '+o.readyStr);
  return '<div class="ocard"><div class="ochead"><b>№ '+o.id+'</b>'
- +'<button class="chip '+o.status+'" data-oid="'+o.id+'"'+(adminMode?'':' disabled')+'>'+st+'</button></div>'
+ +'<button class="chip '+(isCancel?'cancel':o.status)+'" data-oid="'+o.id+'"'+((adminMode&&!isCancel)?'':' disabled')+'>'+st+'</button></div>'
  +'<div class="ocdate">'+o.dateStr+'</div>'
  +'<div class="ocuser">'+o.user.name+' · '+o.user.phone+'</div>'
  +'<div class="ocbody">'+o.lines.join('<br>')+'</div>'
  +totalRow
- +'<div class="ocfoot">'+foot+'</div></div>';
+ +'<div class="ocfoot">'+foot+'</div>'
+ +(adminMode&&!isCancel?'<button class="lnk danger" data-del-oid="'+o.id+'" style="display:block;margin:10px auto 0">Удалить заказ</button>':'')
+ +'</div>';
 }
 function screenOrders(){
- var list=app.tab==='all'?app.orders:app.orders.filter(function(o){return o.user.phone===app.user.phone;});
+ var list;
+ if(app.tab==='all'){
+  /* владелец: отменённые заказы скрыты из его списка */
+  list=app.orders.filter(function(o){return o.status!=='cancel';});
+ }else{
+  /* клиент: видит и отменённые — со статусом «Отменён менеджером» */
+  list=app.orders.filter(function(o){return o.user.phone===app.user.phone;});
+ }
  var out='';
  for(var i=0;i<list.length;i++)out+=orderCard(list[i]);
  if(!list.length)out='<div class="empty">'+ic('inbox')+'Заказов пока нет.<br>Оформите первую термопанель!</div>';
  return '<div class="pad se"><div class="t">Заказы</div>'
  +'<div class="seg"><button class="'+(app.tab==='mine'?'on':'')+'" data-tab="mine">Мои заказы</button>'
  +'<button class="'+(app.tab==='all'?'on':'')+'" data-tab="all">Все заказы'+(app.admin?'':' '+ic('lock'))+'</button></div>'
- +(app.admin&&app.tab==='all'?'<div class="note" style="margin-top:10px">'+ic('info')+'<span>Режим владельца: нажмите на статус заказа, чтобы сменить его. <button class="lnk" id="exitAdmin">Выйти</button></span></div>':'')
+ +(app.admin&&app.tab==='all'?'<div class="note" style="margin-top:10px">'+ic('info')+'<span>Режим владельца: статус меняется нажатием. «Удалить» скрывает заказ у вас, а клиенту меняет статус на «Отменён менеджером». Нажмите кнопку дважды для подтверждения. <button class="lnk" id="exitAdmin">Выйти</button></span></div>':'')
  +out
  +'<button class="lnk" id="logout" style="display:block;margin:20px auto 0">Выйти из аккаунта</button></div>';
+}
+function screenCart(){
+ var out='',grand=0;
+ for(var i=0;i<app.cart.length;i++){
+  var c=app.cart[i];
+  var tot=c.kind==='panel'?panelCartTotal(c):decorCartTotal(c);
+  grand+=tot;
+  out+='<div class="ocard"><div class="ochead"><b>'+(c.kind==='panel'?'Панели':'Фасадный декор')+'</b>'
+  +'<button class="chip done" data-del="'+i+'">Удалить</button></div>'
+  +'<div class="ocbody" style="margin-top:8px">'+cartLabel(c)+'</div>'
+  +'<div class="octotal"><span>Сумма</span><b>'+fmt(tot)+' ₽</b></div></div>';
+ }
+ if(!app.cart.length)out='<div class="empty">'+ic('cart')+'Корзина пуста.<br>Отложенные заказы будут ждать вас здесь.</div>';
+ var bottom=app.cart.length
+  ?'<div class="octotal" style="margin-top:14px;padding-top:12px;border-top:1px dashed var(--line)"><span>Общая сумма корзины</span><b style="font-size:19px">'+fmt(grand)+' ₽</b></div>'
+  +'<button class="btn bp" id="cartOrder">'+ic('cart')+'Оформить заказ ('+app.cart.length+')</button>'
+  +'<div class="hint center" style="justify-content:center">'+ic('info')+'<span>Все позиции объединятся в один заказ</span></div>'
+  :'';
+ return '<div class="pad se"><div class="t">Корзина</div>'
+ +'<div class="sub">Отложенные заказы — оформите их в удобное время</div>'
+ +out+bottom+'</div>';
 }
 function screenPin(){
  var keys=[1,2,3,4,5,6,7,8,9,'',0,'del'],out='';
@@ -1077,10 +1190,11 @@ function screenDecorItem(p){
  +'<button class="stb" data-act="plus" data-f="dglue">'+ic('plus')+'</button></div>'
  +'<div class="hint">'+ic('info')+'<span>'+fmt(ADHESIVE.price)+' ₽/баллон — количество выбираете самостоятельно</span></div></div>'
  +twoM
- +'<div class="cb"><div class="dtotal"><span>Итого</span><b id="dtotal">'+fmt(price*1)+' ₽</b></div>'
+ +'<div class="cb"><div class="dtotal"><span>Итого</span><b id="dtotal">'+fmt(price)+' ₽</b></div>'
  +(price===0?'<div class="hint">'+ic('info')+'<span>Цена элемента ещё не задана — итоговую сумму уточнит менеджер.</span></div>':'')
  +'</div>'
  +'<button class="btn bp" id="dorder">Оформить заказ</button>'
+ +'<button class="btn bg2" id="dcart">'+ic('cart')+'Отложить в корзину</button>'
  +'<a class="btn bg2" style="text-decoration:none" href="'+waSend('Здравствуйте! Вопрос по элементу декора: '+cat.n+' №'+p.item)+'" target="_blank" rel="noopener">'+ic('wa')+'Задать вопрос менеджеру</a></div>';
 }
 
@@ -1125,48 +1239,83 @@ function stepper(f,dir){
  }
  recalc();
 }
-function nextOrderId(){return 'АС-'+String(app.orders.length+1).padStart(4,'0');}
+function nextOrderId(){
+ var max=0;
+ for(var i=0;i<app.orders.length;i++){
+  var m=/(\d+)/.exec(app.orders[i].id||'');
+  if(m){var v=parseInt(m[1],10);if(v>max)max=v;}
+ }
+ return 'АС-'+String(max+1).padStart(4,'0');
+}
 function createOrder(payName,payKind){
  var p=draft.type==='brick'?PRICE_BRICK:PRICE_CERAM;
  var g=draft.type==='brick'?GROUT_BRICK:GROUT_CERAM;
+ var a=getArea();
  var lines;
  if(draft.type==='brick'){
+  var col=(draft.brick==='custom')?('свой: '+(draft.customText||'—')):('№'+BRICK_COLORS[draft.brick].n);
   lines=['Гибкий кирпич · формат «'+FORMATS[draft.format].n+'»',
-   'Кирпич: '+brickName()+' · Шов: '+jointName(),
-   'Толщина: '+draft.thickness+' см · '+fmtArea(getArea())+' м² × '+fmt(p[draft.thickness])+' ₽',
-   ADHESIVE.name+' × '+draft.glue+' · Затирка × '+draft.grout+' '+g.unit];
+   'Кирпич: '+col+' · Шов: '+jointName(),
+   'Толщина: '+draft.thickness+' см · '+fmtArea(a)+' м² × '+fmt(p[draft.thickness])+' ₽'];
  }else{
   lines=['Керамика · плитка '+(draft.tile!=null?('№'+TILES[draft.tile].n):'—')+' (Керамин)',
    'Шов: '+jointName(),
-   'Толщина: '+draft.thickness+' см · '+fmtArea(getArea())+' м² × '+fmt(p[draft.thickness])+' ₽',
-   ADHESIVE.name+' × '+draft.glue+' · Затирка × '+draft.grout+' '+g.unit];
+   'Толщина: '+draft.thickness+' см · '+fmtArea(a)+' м² × '+fmt(p[draft.thickness])+' ₽'];
  }
+ if((draft.glue||0)>0)lines.push(ADHESIVE.name+' × '+draft.glue+' балл. × '+fmt(ADHESIVE.price)+' ₽');
+ if((draft.grout||0)>0)lines.push('Затирка × '+draft.grout+' '+g.unit+' × '+fmt(g.price)+' ₽');
  var o={id:nextOrderId(),
   dateStr:new Date().toLocaleString('ru-RU',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}),
   user:{name:app.user.name,phone:app.user.phone},
   lines:lines,total:calcTotal(),pay:payName,payKind:payKind||'online',
   readyStr:fmtDate(nextBusinessDate()),status:'new'};
- app.orders.unshift(o);saveOrders();return o;
+ app.orders.unshift(o);saveOrders();
+ if(draft&&draft._cart!=null){removeCart(draft._cart);delete draft._cart;}
+ return o;
 }
 function createDecorOrder(ci,item,qty,glue){
  var c=DECOR[ci];
  var price=decorPrice(ci,item);
  var total=price*qty+glue*ADHESIVE.price;
+ var lines=[c.n+' №'+item+' · '+qty+' шт × '+fmt(price)+' ₽'];
+ if(glue>0)lines.push(ADHESIVE.name+' × '+glue+' балл. × '+fmt(ADHESIVE.price)+' ₽');
  var o={id:nextOrderId(),
   dateStr:new Date().toLocaleString('ru-RU',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}),
   user:{name:app.user.name,phone:app.user.phone},
   decor:true,qty:qty,glue:glue,
-  lines:[c.n+' №'+item+' · '+qty+' шт × '+fmt(price)+' ₽',
-   ADHESIVE.name+' × '+glue+' балл. × '+fmt(ADHESIVE.price)+' ₽'],
+  lines:lines,
   total:total,pay:'Согласуется с менеджером',payKind:'decor',
   readyStr:'согласуется с менеджером',status:'new'};
  app.orders.unshift(o);saveOrders();return o;
+}
+/* Корзина целиком → один заказ */
+function createCartOrder(){
+ var lines=[],total=0;
+ for(var i=0;i<app.cart.length;i++){
+  var c=app.cart[i];
+  if(c.kind==='panel'){
+   lines=lines.concat(panelCartLines(c));
+   total+=panelCartTotal(c);
+  }else{
+   lines=lines.concat(decorCartLines(c));
+   total+=decorCartTotal(c);
+  }
+ }
+ var o={id:nextOrderId(),
+  dateStr:new Date().toLocaleString('ru-RU',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}),
+  user:{name:app.user.name,phone:app.user.phone},
+  lines:lines,total:total,pay:'Заявка менеджеру',payKind:'wa',
+  readyStr:fmtDate(nextBusinessDate()),status:'new'};
+ app.orders.unshift(o);saveOrders();
+ clearCart();
+ return o;
 }
 function updateBadge(){
  var b=$('#badge');if(!b)return;
  if(!app.user){b.hidden=true;return;}
  var list=app.admin?app.orders:app.orders.filter(function(o){return o.user.phone===app.user.phone;});
- var n=0;for(var i=0;i<list.length;i++)if(list[i].status!=='done')n++;
+ var n=0;
+ for(var i=0;i<list.length;i++)if(list[i].status!=='done'&&list[i].status!=='cancel')n++;
  b.hidden=!n;b.textContent=n;
 }
 
@@ -1275,14 +1424,27 @@ var binders={
    if(m.kind==='cash'){
     var oc=createOrder(m.name,'cash');
     draft=null;
-    app.stack=[{name:'home'},{name:'success',params:{id:oc.id}}];
-    render();
+    app.stack=[{name:'home',scroll:0},{name:'success',params:{id:oc.id},scroll:0}];
+    lastScr=null;render();
     return;
    }
    payPending=m;
    $('#paySheetSum').textContent=fmt(calcTotal())+' ₽';
    $('#paySheetMethod').textContent='Способ: '+m.name;
    showSheetEl($('#paySheet'));
+  };
+  $('#waOrder').onclick=function(){
+   var oc=createOrder('Заявка менеджеру','wa');
+   draft=null;
+   app.stack=[{name:'home',scroll:0},{name:'success',params:{id:oc.id},scroll:0}];
+   lastScr=null;render();
+  };
+  $('#toCart').onclick=function(){
+   addToCart({kind:'panel',type:draft.type,format:draft.format,brick:draft.brick,customText:draft.customText,
+    tile:draft.tile,joint:draft.joint,jointText:draft.jointText,thickness:draft.thickness,
+    area:draft.area,glue:draft.glue,grout:draft.grout});
+   toast('Заказ сохранён в корзине');
+   home();
   };
  },
  success:function(){
@@ -1300,11 +1462,35 @@ var binders={
    if(!app.admin||app.tab!=='all')return;
    c.onclick=function(){
     var o=null;for(var i=0;i<app.orders.length;i++)if(app.orders[i].id===c.dataset.oid)o=app.orders[i];
-    if(!o)return;
+    if(!o||o.status==='cancel')return;
     var idx=0;for(var j=0;j<STATUSES.length;j++)if(STATUSES[j].id===o.status)idx=j;
     o.status=STATUSES[(idx+1)%STATUSES.length].id;
     saveOrders();render();
     toast('№ '+o.id+' → '+STATUSES[(idx+1)%STATUSES.length].t);
+   };
+  });
+  /* Удаление: двухэтапное подтверждение (без confirm — WebView его блокирует).
+     Заказ помечается «Отменён менеджером»: скрыт у владельца, виден клиенту. */
+  var pendDel=null,pendTimer=null;
+  $$('[data-del-oid]').forEach(function(b){
+   b.onclick=function(){
+    var id=b.dataset.delOid;
+    if(pendDel===id){
+     clearTimeout(pendTimer);pendDel=null;
+     var o=null;
+     for(var i=0;i<app.orders.length;i++)if(app.orders[i].id===id)o=app.orders[i];
+     if(!o)return;
+     o.status='cancel';saveOrders();render();
+     toast('Заказ № '+id+' отменён — у клиента статус «Отменён менеджером»');
+    }else{
+     pendDel=id;
+     b.textContent='Нажмите ещё раз для удаления';
+     clearTimeout(pendTimer);
+     pendTimer=setTimeout(function(){
+      pendDel=null;
+      if(document.body.contains(b))b.textContent='Удалить заказ';
+     },3500);
+    }
    };
   });
   var ex=$('#exitAdmin');
@@ -1312,7 +1498,7 @@ var binders={
   $('#logout').onclick=function(){
    app.user=null;app.admin=false;app.test=false;
    LS.del('asf_user');LS.del('asf_admin');LS.del('asf_test');
-   app.stack=[{name:'auth'}];render();
+   forceStack('auth');render();
   };
  },
  pin:function(){
@@ -1372,9 +1558,28 @@ var binders={
    var qty=Math.max(1,parseInt(inp.value)||1);
    var glue=Math.max(0,parseInt(gin.value)||0);
    var o=createDecorOrder(p.cat,p.item,qty,glue);
-   app.stack=[{name:'home'},{name:'success',params:{id:o.id}}];
-   render();
+   app.stack=[{name:'home',scroll:0},{name:'success',params:{id:o.id},scroll:0}];
+   lastScr=null;render();
    toast('Заявка оформлена — отправьте её менеджеру');
+  };
+  $('#dcart').onclick=function(){
+   var qty=Math.max(1,parseInt(inp.value)||1);
+   var glue=Math.max(0,parseInt(gin.value)||0);
+   addToCart({kind:'decor',cat:p.cat,item:p.item,qty:qty,glue:glue});
+   toast('Сохранено в корзине');
+  };
+ },
+ cart:function(){
+  $$('[data-del]').forEach(function(b){
+   b.onclick=function(){removeCart(+b.dataset.del);render();};
+  });
+  var co=$('#cartOrder');
+  if(co)co.onclick=function(){
+   if(!app.cart.length)return;
+   var o=createCartOrder();
+   app.stack=[{name:'home',scroll:0},{name:'success',params:{id:o.id},scroll:0}];
+   lastScr=null;render();
+   toast('Заказ оформлен — отправьте его менеджеру');
   };
  }
 };
@@ -1386,6 +1591,10 @@ var binders={
  if(!app.user){toast('Сначала войдите в приложение');return;}
  app.tab=app.admin?'all':'mine';
  go('orders');
+};
+ $('#cartBtn').onclick=function(){
+ if(!app.user){toast('Сначала войдите в приложение');return;}
+ go('cart');
 };
  $('#callBtn').onclick=openSheet;
  $('#sheetClose').onclick=closeSheet;
@@ -1405,8 +1614,8 @@ var binders={
    if(!payPending||!draft)return;
    var o=createOrder(payPending.name,'online');
    payPending=null;draft=null;
-   app.stack=[{name:'home'},{name:'success',params:{id:o.id}}];
-   render();
+   app.stack=[{name:'home',scroll:0},{name:'success',params:{id:o.id},scroll:0}];
+   lastScr=null;render();
   });
  },1300);
 };
@@ -1426,7 +1635,7 @@ var binders={
  function end(){
   if(ended)return;ended=true;
   sp.classList.add('out');
-  setTimeout(function(){sp.remove();app.stack=[{name:app.user?'home':'auth'}];render();},450);
+  setTimeout(function(){sp.remove();forceStack(app.user?'home':'auth');render();},450);
  }
  setTimeout(end,2800);
  sp.addEventListener('click',end);
