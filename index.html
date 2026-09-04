@@ -55,7 +55,7 @@ main::-webkit-scrollbar{display:none}
 .note .ic{color:var(--accent);flex:none}
 .g3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
-.sq{position:relative;border:1.5px solid var(--line);background:var(--card);border-radius:15px;padding:7px;cursor:pointer;font:inherit;text-align:left}
+.sq{position:relative;border:1.5px solid var(--line);background:var(--card);border-radius:15px;padding:7px;cursor:pointer;font:inherit;text-align:left;text-decoration:none;color:inherit}
 .sq.sel{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
 .sqimg{border-radius:10px;overflow:hidden;aspect-ratio:1;border:1px solid var(--line);position:relative}
 .sqimg svg,.sqimg img{width:100%;height:100%;display:block;object-fit:cover}
@@ -387,12 +387,14 @@ var TILES=[
  {n:'29',c:'#5c4232',img:'tile-29.jpg'},
  {n:'30',c:'#33302e',img:'tile-30.jpg'}];
 
-/* Фасадный декор — ваши цены */
+/* Фасадный декор — ваши цены.
+   5-я запись {n:'Свой вариант', custom:true} — категория-ссылка на WhatsApp */
 var DECOR=[
  {n:'Карнизы',img:'decor-1.jpg',file:'karniz',count:100,twoM:true,price:0,prices:{1:1100,2:1500,3:1700,4:1500,5:4000,6:2100,7:2500,8:3400,9:4700,10:4700,11:1400,12:1700,13:1200,14:4700,15:3500,16:1600,17:3000,18:3100,19:1100,20:2600,21:800,22:2900,23:1000,24:2000,25:2000,26:2600,27:3400,28:1300,29:2400,30:1400,31:3100,32:1800,33:1000,34:3400,35:6400,36:4900,37:4500,38:1300,39:2100,40:2500,41:2000,42:900,43:2500,44:1400,45:4900,46:2000,47:2000,48:1400,49:5800,50:4700,51:2300,52:1900,53:1900,54:1600,55:2300,56:2300,57:2900,58:2200,59:10600,60:2600,61:2500,62:8300,63:2300,64:4100}},
  {n:'Молдинги',img:'decor-2.jpg',file:'molding',count:100,twoM:true,price:0,prices:{1:800,2:800,3:800,4:800,5:800,6:800,7:900,8:800,9:800,10:800,11:800,12:800,13:950,14:800,15:950,16:800,17:900,18:800,19:1050,20:800,21:1100,22:800,23:800,24:800,25:1100,26:800,27:1200,28:800,29:800,30:900,31:1400,32:1700,33:950,34:1300,35:800,36:2300,37:1600,38:2500,39:900,40:950,41:800,42:800,43:950,44:900,45:3800,46:4300,47:950,48:800,49:1200,50:800,51:800,52:800,53:950,54:900,55:1400,56:800,57:900,58:800,59:2100,60:1750,61:900,62:1550,63:800,64:900,65:900,66:1400,67:800,68:1000,69:800,70:800,71:950,72:800,73:800,74:1000,75:800,76:1100,77:1700,78:1600,79:1100,80:1000,81:1100,82:1500,83:850,84:1250,85:1150,86:1600,87:800}},
  {n:'Подоконники',img:'decor-3.jpg',file:'podokonnik',count:100,twoM:true,price:0,prices:{1:1100,2:1100,3:1000,4:1150,5:1350,6:1600,7:1400,8:1800,9:1700,10:1600}},
- {n:'Углы',img:'decor-4.jpg',file:'ugol',count:15,twoM:false,price:0,prices:{1:350,2:260,3:310,4:300,5:400,6:360,7:320,8:290,9:270,10:240,11:310}}];
+ {n:'Углы',img:'decor-4.jpg',file:'ugol',count:15,twoM:false,price:0,prices:{1:350,2:260,3:310,4:300,5:400,6:360,7:320,8:290,9:270,10:240,11:310}},
+ {n:'Свой вариант',img:'decor-5.jpg',custom:true}];
 function decorPrice(ci,n){
  var c=DECOR[ci];
  return (c.prices&&c.prices[n]!=null)?c.prices[n]:c.price;
@@ -441,6 +443,16 @@ function decorCatFallback(i){
   s+='<path d="M60 40h26v94h54v26H60z"/>';
  }
  s+='</g></svg>';
+ return s;
+}
+function decorCustomSVG(){
+ var s='<svg viewBox="0 0 200 200" preserveAspectRatio="xMidYMid slice">';
+ s+='<rect width="200" height="200" fill="#f6e5d7"/>';
+ s+='<rect x="30" y="86" width="140" height="12" rx="5" fill="#e0b593"/>';
+ s+='<rect x="44" y="98" width="112" height="10" rx="4" fill="#d3a37e"/>';
+ s+='<text x="100" y="60" text-anchor="middle" font-family="Arial" font-size="30" font-weight="800" fill="#b0522c">?</text>';
+ s+='<text x="100" y="150" text-anchor="middle" font-family="Arial" font-size="13" font-weight="700" fill="#8e3f20">ваш эскиз</text>';
+ s+='</svg>';
  return s;
 }
 function decorCoverSVG(){
@@ -623,7 +635,6 @@ function glueNeed(a){return Math.max(1,Math.ceil(a/ADHESIVE.coverage));}
 function groutPacks(a){return draft.type==='brick'?Math.max(1,Math.ceil(a/50)):Math.max(1,Math.ceil(a/3));}
 function autoAssign(){var a=getArea();if(a<=0)return;draft.glue=glueNeed(a);draft.grout=groutPacks(a);}
 
-/* ===== Корзина ===== */
 function saveCart(){LS.set('asf_cart',JSON.stringify(app.cart));updateCartBadge();}
 function addToCart(it){app.cart.push(it);saveCart();}
 function removeCart(i){app.cart.splice(i,1);saveCart();}
@@ -675,6 +686,11 @@ function cartLabel(c){
  var lbl=DECOR[c.cat].n+' №'+c.item+' · '+c.qty+' шт';
  if((c.glue||0)>0)lbl+=' · клей-пена ×'+c.glue;
  return lbl;
+}
+function clientCanDelete(o){
+ if(o.status==='cancel')return true;
+ if(o.status==='new'&&(o.payKind==='wa'||o.payKind==='cash'||o.payKind==='decor'))return true;
+ return false;
 }
 function forceStack(name){app.stack=[{name:name,scroll:0}];lastScr=null;}
 
@@ -786,7 +802,6 @@ function hideSheetEl(el,cb){
 function openSheet(){showSheetEl($('#sheet'));}
 function closeSheet(){hideSheetEl($('#sheet'));}
 
-/* Навигация с запоминанием позиции прокрутки */
 function render(){
  if(!app.stack.length)return;
  var top=app.stack[app.stack.length-1],scr=top.name;
@@ -907,21 +922,21 @@ function screenFormat(){
   var inner=f.img
    ?'<img src="'+f.img+'" alt="'+f.n+'" style="opacity:0" onload="this.style.opacity=1" onerror="fmtFallback('+i+',this)">'
    :f.draw('#a8432c','#d8cbb8',200,200);
-  out+='<button class="sq '+(draft.format===i?'sel':'')+'" data-fmt="'+i+'"><div class="sqimg">'+inner+'</div><div class="sqname">'+f.n+'</div><div class="sqdesc">'+f.d+'</div><span class="ck">'+ic('check')+'</span></button>';
+  out+='<button class="sq" data-fmt="'+i+'"><div class="sqimg">'+inner+'</div><div class="sqname">'+f.n+'</div><div class="sqdesc">'+f.d+'</div><span class="ck">'+ic('check')+'</span></button>';
  }
- return '<div class="pad se">'+stepsBar(1)+'<div class="t">Выберите формат панели</div><div class="g3">'+out+'</div>'
- +'<button class="btn bp" id="nextBtn" '+(draft.format==null?'disabled':'')+'>Продолжить</button></div>';
+ return '<div class="pad se">'+stepsBar(1)+'<div class="t">Выберите формат панели</div><div class="g3">'+out+'</div></div>';
 }
 function screenBrick(){
  var out='';
  out+='<button class="sq '+(draft.brick==='custom'?'sel':'')+'" id="customBtn"><div class="sqimg custom">'+ic('palette')+'</div><div class="sqname">Свой цвет</div><div class="sqdesc">под заказ</div><span class="ck">'+ic('check')+'</span></button>';
  for(var i=0;i<BRICK_COLORS.length;i++)out+=swBrick(i,draft.brick===i);
+ var nb=(draft.brick==='custom')?'<button class="btn bp" id="nextBtn">Продолжить</button>':'';
  return '<div class="pad se">'+stepsBar(2)+'<div class="t">Выберите цвет кирпича</div><div class="g3">'+out+'</div>'
  +'<div class="cpanel '+(draft.brick==='custom'?'open':'')+'" id="cpanel"><div class="field"><span>Не нашли нужный цвет? Опишите его:</span>'
  +'<textarea id="customText" placeholder="Например: тёмно-зелёный, RAL 6009">'+(draft.customText||'')+'</textarea></div>'
  +'<div class="ferr" id="customErr" hidden>Опишите нужный цвет</div></div>'
  +samplesNote()
- +'<button class="btn bp" id="nextBtn" '+(draft.brick==null?'disabled':'')+'>Продолжить</button></div>';
+ +nb+'</div>';
 }
 function screenJoint(){
  var step=draft.type==='brick'?3:2;
@@ -948,6 +963,7 @@ function screenJoint(){
    +(JOINTS[i].img?'<img src="'+JOINTS[i].img+'" alt="'+JOINTS[i].n+'" style="opacity:0" onload="this.style.opacity=1" onerror="this.remove()">':'')
    +'</div><div class="swn">'+JOINTS[i].n+'</div><span class="ck">'+ic('check')+'</span></button>';
  }
+ var nb=(draft.joint==='custom')?'<button class="btn bp" id="nextBtn">Продолжить</button>':'';
  return '<div class="pad se">'+stepsBar(step)+'<div class="t">Выберите цвет шва</div><div class="jprev">'+big+'</div><div class="jcap">'+cap+'</div>'
  +(jnote?'<div class="hint">'+ic('info')+'<span>'+jnote+'</span></div>':'')
  +'<div class="g3">'+out+'</div>'
@@ -955,14 +971,13 @@ function screenJoint(){
  +'<textarea id="jcustomText" placeholder="Например: светло-бежевый, RAL 1013">'+(draft.jointText||'')+'</textarea></div>'
  +'<div class="ferr" id="jcustomErr" hidden>Опишите нужный цвет</div></div>'
  +samplesNote()
- +'<button class="btn bp" id="nextBtn" '+(draft.joint==null?'disabled':'')+'>Продолжить</button></div>';
+ +nb+'</div>';
 }
 function screenTile(){
  var out='';
  for(var i=0;i<TILES.length;i++)out+=swTile(i,draft.tile===i);
  return '<div class="pad se">'+stepsBar(1)+'<div class="t">Плитка завода Керамин</div><div class="sub">Выберите расцветку — всего '+TILES.length+' вариантов</div><div class="g3">'+out+'</div>'
- +samplesNote()
- +'<button class="btn bp" id="nextBtn" '+(draft.tile==null?'disabled':'')+'>Продолжить</button></div>';
+ +samplesNote()+'</div>';
 }
 function screenThick(){
  var p=draft.type==='brick'?PRICE_BRICK:PRICE_CERAM;
@@ -970,10 +985,9 @@ function screenThick(){
  var out='';
  for(var i=0;i<keys.length;i++){
   var t=keys[i];
-  out+='<button class="th '+(draft.thickness==t?'sel':'')+'" data-th="'+t+'"><b>'+t+' см</b><span>'+fmt(p[t])+' ₽/м²</span><span class="ck">'+ic('check')+'</span></button>';
+  out+='<button class="th" data-th="'+t+'"><b>'+t+' см</b><span>'+fmt(p[t])+' ₽/м²</span><span class="ck">'+ic('check')+'</span></button>';
  }
- return '<div class="pad se">'+stepsBar(stepTotal()-1)+'<div class="t">Выберите толщину утеплителя</div><div class="g2">'+out+'</div>'
- +'<button class="btn bp" id="nextBtn" '+(draft.thickness==null?'disabled':'')+'>Продолжить</button></div>';
+ return '<div class="pad se">'+stepsBar(stepTotal()-1)+'<div class="t">Выберите толщину утеплителя</div><div class="g2">'+out+'</div></div>';
 }
 function screenCalc(){
  var g=draft.type==='brick'?GROUT_BRICK:GROUT_CERAM;
@@ -1004,7 +1018,8 @@ function screenCalc(){
  +'<button class="stb" data-act="plus" data-f="grout">'+ic('plus')+'</button></div>'
  +'<div class="hint">'+ic('info')+'<span id="groutHint">'+gHint+'</span></div>'
  +'<div class="sumline"><span id="groutDesc">Затирка</span><b id="sumGrout">0 ₽</b></div></div>'
- +'<div class="lead">'+ic('clock')+'<span>Срок изготовления — '+LEAD_DAYS+' рабочих дней со следующего дня после оформления заказа.</span></div></div>'
+ +'<div class="lead">'+ic('clock')+'<span>Срок изготовления — '+LEAD_DAYS+' рабочих дней со следующего дня после оформления заказа.</span></div>'
+ +'<button class="btn bg2" id="calcCart">'+ic('cart')+'Сохранить в корзину</button></div>'
  +'<div class="tbar"><div class="tb-l"><span>Итого к оплате</span><b id="total">0 ₽</b></div>'
  +'<button class="btn bp tb-b" id="toPay">К оплате</button></div>';
 }
@@ -1078,6 +1093,7 @@ function orderCard(o){
  if(isCancel)st='Отменён менеджером';
  else{for(var i=0;i<STATUSES.length;i++)if(STATUSES[i].id===o.status)st=STATUSES[i].t;}
  var adminMode=app.admin&&app.tab==='all';
+ var clientMode=(app.tab==='mine');
  var unpaid=(o.payKind==='cash')?'<span class="unpaid"> · ожидает оплаты</span>':'';
  var totalRow='<div class="octotal"><span>Итого</span><b>'+(o.total>0?fmt(o.total)+' ₽':'уточняется')+'</b></div>';
  var foot=isCancel
@@ -1085,6 +1101,12 @@ function orderCard(o){
   :(o.decor
     ?'Заявка на декор · согласуется с менеджером'
     :o.pay+unpaid+' · готовность: '+o.readyStr);
+ var delBtn='';
+ if(adminMode&&!isCancel){
+  delBtn='<button class="lnk danger" data-del-oid="'+o.id+'" style="display:block;margin:10px auto 0">Удалить заказ</button>';
+ }else if(clientMode&&clientCanDelete(o)){
+  delBtn='<button class="lnk danger" data-delown-oid="'+o.id+'" style="display:block;margin:10px auto 0">Удалить заказ</button>';
+ }
  return '<div class="ocard"><div class="ochead"><b>№ '+o.id+'</b>'
  +'<button class="chip '+(isCancel?'cancel':o.status)+'" data-oid="'+o.id+'"'+((adminMode&&!isCancel)?'':' disabled')+'>'+st+'</button></div>'
  +'<div class="ocdate">'+o.dateStr+'</div>'
@@ -1092,16 +1114,14 @@ function orderCard(o){
  +'<div class="ocbody">'+o.lines.join('<br>')+'</div>'
  +totalRow
  +'<div class="ocfoot">'+foot+'</div>'
- +(adminMode&&!isCancel?'<button class="lnk danger" data-del-oid="'+o.id+'" style="display:block;margin:10px auto 0">Удалить заказ</button>':'')
+ +delBtn
  +'</div>';
 }
 function screenOrders(){
  var list;
  if(app.tab==='all'){
-  /* владелец: отменённые заказы скрыты из его списка */
   list=app.orders.filter(function(o){return o.status!=='cancel';});
  }else{
-  /* клиент: видит и отменённые — со статусом «Отменён менеджером» */
   list=app.orders.filter(function(o){return o.user.phone===app.user.phone;});
  }
  var out='';
@@ -1153,12 +1173,19 @@ function screenDecor(){
  var out='';
  for(var i=0;i<DECOR.length;i++){
   var c=DECOR[i];
-  out+='<button class="sq dcat" data-cat="'+i+'"><div class="sqimg">'+photoOr(c.img,decorCatFallback(i),c.n)+'</div><div class="sqname">'+c.n+'</div><div class="sqdesc">'+c.count+' вариантов</div></button>';
+  if(c.custom){
+   /* Пятая категория «Свой вариант» — сразу открывает WhatsApp */
+   out+='<a class="sq dcat" href="'+waSend('Здравствуйте! Не нашёл нужный элемент декора в каталоге. Прикрепляю фото/чертёж своего элемента:')+'" target="_blank" rel="noopener" style="text-decoration:none;color:inherit">'
+   +'<div class="sqimg">'+(c.img?photoOr(c.img,decorCustomSVG(),'Свой вариант'):decorCustomSVG())+'</div>'
+   +'<div class="sqname">'+c.n+'</div><div class="sqdesc">под заказ · WhatsApp</div></a>';
+  }else{
+   out+='<button class="sq dcat" data-cat="'+i+'"><div class="sqimg">'+photoOr(c.img,decorCatFallback(i),c.n)+'</div><div class="sqname">'+c.n+'</div><div class="sqdesc">'+c.count+' вариантов</div></button>';
+  }
  }
  return '<div class="pad se"><div class="t">Фасадный декор</div>'
  +'<div class="sub">Декоративные элементы для отделки фасада — выберите категорию</div>'
  +'<div class="g2">'+out+'</div>'
- +'<div class="note" style="margin-top:16px">'+ic('info')+'<span>Не нашли нужный элемент? Свяжитесь с менеджером — подберём под ваш проект.</span></div></div>';
+ +'<div class="note" style="margin-top:16px">'+ic('info')+'<span>«Свой вариант» — отправьте менеджеру фото или чертёж нужного элемента в WhatsApp, изготовим под заказ.</span></div></div>';
 }
 function screenDecorList(p){
  var cat=DECOR[p.cat];
@@ -1288,7 +1315,6 @@ function createDecorOrder(ci,item,qty,glue){
   readyStr:'согласуется с менеджером',status:'new'};
  app.orders.unshift(o);saveOrders();return o;
 }
-/* Корзина целиком → один заказ */
 function createCartOrder(){
  var lines=[],total=0;
  for(var i=0;i<app.cart.length;i++){
@@ -1347,40 +1373,49 @@ var binders={
   if(mc)mc.onclick=copyPhone;
  },
  format:function(){
-  $$('[data-fmt]').forEach(function(b){b.onclick=function(){draft.format=+b.dataset.fmt;render();};});
-  $('#nextBtn').onclick=function(){go('brick');};
+  $$('[data-fmt]').forEach(function(b){
+   b.onclick=function(){draft.format=+b.dataset.fmt;go('brick');};
+  });
  },
  brick:function(){
-  $$('.g3 .sq[data-i]').forEach(function(b){b.onclick=function(){draft.brick=+b.dataset.i;render();};});
+  $$('.g3 .sq[data-i]').forEach(function(b){
+   b.onclick=function(){draft.brick=+b.dataset.i;go('joint');};
+  });
   $('#customBtn').onclick=function(){draft.brick='custom';render();};
   var ta=$('#customText');
   if(ta)ta.addEventListener('input',function(e){draft.customText=e.target.value;});
-  $('#nextBtn').onclick=function(){
-   if(draft.brick==='custom'&&!draft.customText.trim()){
+  var nb=$('#nextBtn');
+  if(nb)nb.onclick=function(){
+   if(!draft.customText.trim()){
     $('#customErr').hidden=false;$('#cpanel').classList.add('open');return;
    }
    go('joint');
   };
  },
  joint:function(){
-  $$('.g3 .sq[data-i]').forEach(function(b){b.onclick=function(){draft.joint=+b.dataset.i;render();};});
+  $$('.g3 .sq[data-i]').forEach(function(b){
+   b.onclick=function(){draft.joint=+b.dataset.i;go('thick');};
+  });
   $('#jcustomBtn').onclick=function(){draft.joint='custom';render();};
   var ta=$('#jcustomText');
   if(ta)ta.addEventListener('input',function(e){draft.jointText=e.target.value;});
-  $('#nextBtn').onclick=function(){
-   if(draft.joint==='custom'&&!draft.jointText.trim()){
+  var nb=$('#nextBtn');
+  if(nb)nb.onclick=function(){
+   if(!draft.jointText.trim()){
     $('#jcustomErr').hidden=false;$('#jcpanel').classList.add('open');return;
    }
    go('thick');
   };
  },
  tile:function(){
-  $$('.g3 .sq[data-i]').forEach(function(b){b.onclick=function(){draft.tile=+b.dataset.i;render();};});
-  $('#nextBtn').onclick=function(){go('joint');};
+  $$('.g3 .sq[data-i]').forEach(function(b){
+   b.onclick=function(){draft.tile=+b.dataset.i;go('joint');};
+  });
  },
  thick:function(){
-  $$('[data-th]').forEach(function(b){b.onclick=function(){draft.thickness=+b.dataset.th;render();};});
-  $('#nextBtn').onclick=function(){go('calc');};
+  $$('[data-th]').forEach(function(b){
+   b.onclick=function(){draft.thickness=+b.dataset.th;go('calc');};
+  });
  },
  calc:function(){
   $$('.stb').forEach(function(b){b.onclick=function(){stepper(b.dataset.f,b.dataset.act==='plus'?1:-1);};});
@@ -1403,6 +1438,14 @@ var binders={
   $('#groutInput').addEventListener('input',function(e){draft.grout=Math.max(0,parseInt(e.target.value)||0);recalc();});
   $('#autoGlue').onclick=function(){var a=getArea();if(a<=0){toast('Сначала укажите площадь');return;}draft.glue=glueNeed(a);$('#glueInput').value=draft.glue;recalc();};
   $('#autoGrout').onclick=function(){var a=getArea();if(a<=0){toast('Сначала укажите площадь');return;}draft.grout=groutPacks(a);$('#groutInput').value=draft.grout;recalc();};
+  $('#calcCart').onclick=function(){
+   if(!(getArea()>0)){toast('Сначала укажите площадь покрытия');return;}
+   addToCart({kind:'panel',type:draft.type,format:draft.format,brick:draft.brick,customText:draft.customText,
+    tile:draft.tile,joint:draft.joint,jointText:draft.jointText,thickness:draft.thickness,
+    area:draft.area,glue:draft.glue,grout:draft.grout});
+   toast('Заказ сохранён в корзине');
+   home();
+  };
   $('#toPay').onclick=function(){
    if(!(getArea()>0)){toast('Сначала укажите площадь покрытия');return;}
    go('pay');
@@ -1469,28 +1512,40 @@ var binders={
     toast('№ '+o.id+' → '+STATUSES[(idx+1)%STATUSES.length].t);
    };
   });
-  /* Удаление: двухэтапное подтверждение (без confirm — WebView его блокирует).
-     Заказ помечается «Отменён менеджером»: скрыт у владельца, виден клиенту. */
   var pendDel=null,pendTimer=null;
+  function twoTap(btn,id,doDelete){
+   if(pendDel===id){
+    clearTimeout(pendTimer);pendDel=null;doDelete();
+   }else{
+    pendDel=id;
+    btn.textContent='Нажмите ещё раз для удаления';
+    clearTimeout(pendTimer);
+    pendTimer=setTimeout(function(){
+     pendDel=null;
+     if(document.body.contains(btn))btn.textContent='Удалить заказ';
+    },3500);
+   }
+  }
   $$('[data-del-oid]').forEach(function(b){
    b.onclick=function(){
-    var id=b.dataset.delOid;
-    if(pendDel===id){
-     clearTimeout(pendTimer);pendDel=null;
+    twoTap(b,b.dataset.delOid,function(){
+     var id=b.dataset.delOid;
      var o=null;
      for(var i=0;i<app.orders.length;i++)if(app.orders[i].id===id)o=app.orders[i];
      if(!o)return;
      o.status='cancel';saveOrders();render();
      toast('Заказ № '+id+' отменён — у клиента статус «Отменён менеджером»');
-    }else{
-     pendDel=id;
-     b.textContent='Нажмите ещё раз для удаления';
-     clearTimeout(pendTimer);
-     pendTimer=setTimeout(function(){
-      pendDel=null;
-      if(document.body.contains(b))b.textContent='Удалить заказ';
-     },3500);
-    }
+    });
+   };
+  });
+  $$('[data-delown-oid]').forEach(function(b){
+   b.onclick=function(){
+    twoTap(b,b.dataset.delownOid,function(){
+     var id=b.dataset.delownOid;
+     app.orders=app.orders.filter(function(o){return o.id!==id;});
+     saveOrders();render();
+     toast('Заказ № '+id+' удалён');
+    });
    };
   });
   var ex=$('#exitAdmin');
@@ -1518,7 +1573,7 @@ var binders={
   });
  },
  decor:function(){
-  $$('.dcat').forEach(function(b){
+  $$('.dcat[data-cat]').forEach(function(b){
    b.onclick=function(){go('decorlist',{cat:+b.dataset.cat});};
   });
  },
